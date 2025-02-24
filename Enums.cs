@@ -19,6 +19,28 @@ namespace MortensWay
     }
 
 
+    public enum Tiles
+    {
+
+        TowerA,
+        TowerB,
+        Portal,
+        Key,
+        Forest,
+        Wall,
+        Path,
+        Grass
+
+    }
+
+    public enum Morten
+    {
+
+        Bishop
+
+    }
+
+
     public enum SoundEffects
     {
 
