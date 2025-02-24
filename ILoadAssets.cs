@@ -34,7 +34,11 @@ namespace MortensWay
         /// <param name="sprites">Dictionary containing single sprites with Enum as the key</param>
         private static void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
-            //sprites.Add(LogicItems.MousePointer, content.Load<Texture2D>("Sprites\\GameItems\\mousePointer"));
+
+            sprites.Add(LogicItems.MousePointer, content.Load<Texture2D>("Sprites\\LogicItems\\mousePointer"));
+            sprites.Add(TileTypes.Path, content.Load<Texture2D>("Sprites\\Tiles\\dirtTile"));
+            sprites.Add(TileTypes.Grass, content.Load<Texture2D>("Sprites\\Tiles\\grassTile"));
+
         }
 
         /// <summary>
