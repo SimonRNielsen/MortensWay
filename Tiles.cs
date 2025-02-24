@@ -14,11 +14,26 @@ namespace MortensWay
         {
             Type = type;
             position = new Vector2(spawnPos.X + sprite.Width/2, spawnPos.Y + sprite.Height/2);
+
+            LayerType(type);
         }
 
         public override void LoadContent(ContentManager content)
         {
             throw new NotImplementedException();
+        }
+
+        public void LayerType(Enum type)
+        {
+            if (type is TileTypes.Forest)
+            {
+                this.layer = 1f;
+            }
+            else if (type is TileTypes.Grass)
+            {
+                this.layer = 0f;
+            }
+
         }
     }
 }
