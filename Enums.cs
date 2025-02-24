@@ -35,6 +35,13 @@
 
     }
 
+    public enum Monstre
+    {
+
+        Goose
+
+    }
+
 
     public enum SoundEffects
     {

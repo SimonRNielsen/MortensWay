@@ -45,7 +45,23 @@ namespace MortensWay
             sprites.Add(TileTypes.Path, content.Load<Texture2D>("Sprites\\Tiles\\dirtTile"));
             sprites.Add(TileTypes.Grass, content.Load<Texture2D>("Sprites\\Tiles\\grassTile"));
 
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro0"));
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro1"));
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro2"));
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro3"));
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro4"));
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro5"));
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro6"));
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro7"));
+
             #endregion
+            #region Avatars
+
+            sprites.Add(MortensEnum.Bishop, content.Load<Texture2D>("Sprites\\mortenBishop0"));
+            sprites.Add(MortensEnum.Bishop, content.Load<Texture2D>("Sprites\\mortenBishop1"));
+
+            #endregion
+
 
         }
 
