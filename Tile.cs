@@ -23,7 +23,7 @@ namespace MortensWay
             get => walkable;
             set
             {
-                if (value == false)
+                if (value == false && walkable == true)
                 {
                     walkable = value;
 

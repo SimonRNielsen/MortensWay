@@ -151,13 +151,13 @@ namespace MortensWay
                 sprite = GameWorld.sprites[(Type as Enum)];
             }
             catch { }
-            try
-            {
-                sprites = GameWorld.animations[(Type as Enum)];
-                if (sprites != null)
-                    sprite = sprites[0];
-            }
-            catch { }
+            //try
+            //{
+            //    sprites = GameWorld.animations[(Type as Enum)];
+            //    if (sprites != null)
+            //        sprite = sprites[0];
+            //}
+            //catch { }
             if (sprite != null)
                 position = new Vector2(spawnPos.X + sprite.Width / 2, spawnPos.Y + sprite.Height / 2);
             else
