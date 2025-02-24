@@ -19,7 +19,7 @@ namespace MortensWay
     }
 
 
-    public enum Tiles
+    public enum TileTypes
     {
 
         TowerA,
@@ -33,7 +33,7 @@ namespace MortensWay
 
     }
 
-    public enum Morten
+    public enum MortensEnum
     {
 
         Bishop
@@ -44,11 +44,15 @@ namespace MortensWay
     public enum SoundEffects
     {
 
+
+
     }
 
 
     public enum Music
     {
+
+
 
     }
 }
