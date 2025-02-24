@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MortensWay
+﻿namespace MortensWay
 {
     /// <summary>
     /// Base enum for objects like mouse or background etc.
