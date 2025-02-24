@@ -87,6 +87,7 @@ namespace MortensWay
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             ILoadAssets.Load(Content);
 
+
         }
 
 
