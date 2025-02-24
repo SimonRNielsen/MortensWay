@@ -35,9 +35,17 @@ namespace MortensWay
         private static void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
 
+            #region LogicItems
+
             sprites.Add(LogicItems.MousePointer, content.Load<Texture2D>("Sprites\\LogicItems\\mousePointer"));
+
+            #endregion
+            #region Tiles
+
             sprites.Add(TileTypes.Path, content.Load<Texture2D>("Sprites\\Tiles\\dirtTile"));
             sprites.Add(TileTypes.Grass, content.Load<Texture2D>("Sprites\\Tiles\\grassTile"));
+
+            #endregion
 
         }
 
