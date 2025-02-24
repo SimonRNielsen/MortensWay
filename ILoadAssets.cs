@@ -24,7 +24,7 @@ namespace MortensWay
             LoadAnimations(content, GameWorld.animations);
             LoadSoundEffects(content, GameWorld.soundEffects);
             LoadMusic(content, GameWorld.music);
-            GameWorld.gameFont = null;
+            GameWorld.gameFont = content.Load<SpriteFont>("gameFont");
         }
 
         /// <summary>
@@ -34,7 +34,19 @@ namespace MortensWay
         /// <param name="sprites">Dictionary containing single sprites with Enum as the key</param>
         private static void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
-            //sprites.Add(LogicItems.MousePointer, content.Load<Texture2D>("Sprites\\GameItems\\mousePointer"));
+
+            #region LogicItems
+
+            sprites.Add(LogicItems.MousePointer, content.Load<Texture2D>("Sprites\\LogicItems\\mousePointer"));
+
+            #endregion
+            #region Tiles
+
+            sprites.Add(TileTypes.Path, content.Load<Texture2D>("Sprites\\Tiles\\dirtTile"));
+            sprites.Add(TileTypes.Grass, content.Load<Texture2D>("Sprites\\Tiles\\grassTile"));
+
+            #endregion
+
         }
 
         /// <summary>

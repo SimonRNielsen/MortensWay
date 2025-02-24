@@ -55,7 +55,7 @@ namespace MortensWay
 
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
 
         }
 
@@ -69,6 +69,7 @@ namespace MortensWay
             _graphics.PreferredBackBufferWidth = 960;
             _graphics.PreferredBackBufferHeight = 960;
             _graphics.ApplyChanges();
+            base.Initialize();
 
             //Instantiates mousePointer and makes "Content" static
             AddContent = Content;
@@ -76,7 +77,6 @@ namespace MortensWay
 
             keyboard.CloseGame += ExitGame;
 
-            base.Initialize();
 
         }
 
