@@ -50,6 +50,8 @@ namespace MortensWay
                 default:
                     break;
             }
+
+            LayerType(type);
         }
 
         public override void LoadContent(ContentManager content)
@@ -104,6 +106,19 @@ namespace MortensWay
                 monster.IsAlive = false;
                 walkable = true;
                 edges = realEdges;
+            }
+
+        }
+
+        public void LayerType(Enum type)
+        {
+            if (type is TileTypes.Fence)
+            {
+                this.layer = 1f;
+            }
+            else if (type is TileTypes.Grass)
+            {
+                this.layer = 0f;
             }
 
         }
