@@ -57,15 +57,18 @@ namespace MortensWay
 
             foreach (Tile other in list)
             {
-                float distance = Vector2.Distance(position, other.Position);
-                if (this != other && Walkable && distance < 91)
+                if (walkable)
                 {
-                    int weight;
-                    if (distance < 65)
-                        weight = 10;
-                    else
-                        weight = 14;
-                    Edges.Add(new Edge(weight, this, other));
+                    float distance = Vector2.Distance(position, other.Position);
+                    if (this != other && distance < 91)
+                    {
+                        int weight;
+                        if (distance < 65)
+                            weight = 10;
+                        else
+                            weight = 14;
+                        Edges.Add(new Edge(weight, this, other));
+                    }
                 }
             }
 
