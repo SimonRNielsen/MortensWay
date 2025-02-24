@@ -75,6 +75,20 @@ namespace MortensWay
             AddContent = Content;
             mousePointer = new MousePointer<Enum>(LogicItems.MousePointer, ref gameObjects, false);
 
+              
+            //grass
+            for (int j = 1; j < 30; j++)
+            {
+                for (int i = 1; i < 30; i++)
+                {
+                    gameObjects.Add(new Tiles(TileTypes.Grass, new Vector2(32 * i, 32 * j)));
+                    i++;
+                }
+                j++;
+            }
+
+
+
             keyboard.CloseGame += ExitGame;
 
 
