@@ -146,7 +146,6 @@ namespace MortensWay
         {
 
             Type = type;
-            position = spawnPos;
             try
             {
                 sprite = GameWorld.sprites[(Type as Enum)];
@@ -159,6 +158,7 @@ namespace MortensWay
                     sprite = sprites[0];
             }
             catch { }
+            position = new Vector2(spawnPos.X + sprite.Width / 2, spawnPos.Y + sprite.Height / 2);
 
         }
 

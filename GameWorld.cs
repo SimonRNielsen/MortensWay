@@ -69,6 +69,7 @@ namespace MortensWay
             _graphics.PreferredBackBufferWidth = 960;
             _graphics.PreferredBackBufferHeight = 960;
             _graphics.ApplyChanges();
+            
             base.Initialize();
 
             //Instantiates mousePointer and makes "Content" static
@@ -77,14 +78,12 @@ namespace MortensWay
 
               
             //grass
-            for (int j = 1; j < 30; j++)
+            for (int j = 0; j < 15; j++)
             {
-                for (int i = 1; i < 30; i++)
+                for (int i = 0; i < 15; i++)
                 {
-                    gameObjects.Add(new Tiles(TileTypes.Grass, new Vector2(32 * i, 32 * j)));
-                    i++;
+                    gameObjects.Add(new Tiles(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
                 }
-                j++;
             }
 
 
@@ -149,6 +148,7 @@ namespace MortensWay
                     foreach (GameObject<Enum> gameObject in gameObjects)
                     {
                         gameObject.Draw(_spriteBatch);
+                        DrawCollisionBox(gameObject);
                     }
             }
 
