@@ -20,9 +20,10 @@ namespace MortensWay
             get => walkable;
             set
             {
-                walkable = value;
                 if (value == false)
                 {
+                    walkable = value;
+
                     Thread t = new Thread(SpawnMonster);
                     t.IsBackground = true;
                     t.Start();
