@@ -66,8 +66,8 @@ namespace MortensWay
         {
 
             //Sets window resolution
-            _graphics.PreferredBackBufferWidth = 1920;
-            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.PreferredBackBufferWidth = 960;
+            _graphics.PreferredBackBufferHeight = 960;
             _graphics.ApplyChanges();
 
             //Instantiates mousePointer and makes "Content" static
