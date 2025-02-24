@@ -26,6 +26,7 @@ namespace MortensWay
         internal static KeyboardInput keyboard = new KeyboardInput();
         private static List<GameObject<Enum>> gameObjects = new List<GameObject<Enum>>();
         private static List<GameObject<Enum>> newGameObjects = new List<GameObject<Enum>>();
+        public static HashSet<Tile> grid = new HashSet<Tile>();
         public static Dictionary<Enum, Texture2D> sprites = new Dictionary<Enum, Texture2D>();
         public static Dictionary<Enum, Texture2D[]> animations = new Dictionary<Enum, Texture2D[]>();
         public static Dictionary<Enum, SoundEffect> soundEffects = new Dictionary<Enum, SoundEffect>();
@@ -76,14 +77,29 @@ namespace MortensWay
             AddContent = Content;
             mousePointer = new MousePointer<Enum>(LogicItems.MousePointer, ref gameObjects, false);
 
-              
             //grass
             for (int j = 0; j < 15; j++)
             {
                 for (int i = 0; i < 15; i++)
                 {
-                    gameObjects.Add(new Tiles(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
+                    TileTypes tile;
+                    switch (i)
+                    {
+                        case 1 when j > 5: //Test
+                            tile = TileTypes.Fence;
+                            break;
+                        default:
+                            tile = TileTypes.Grass;
+                            break;
+                    }
+                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
+                    gameObjects.Add(t);
+                    grid.Add(t);
                 }
+            }
+            foreach (Tile entry in grid)
+            {
+                entry.CreateEdges(grid);
             }
 
             //Fence
@@ -99,7 +115,6 @@ namespace MortensWay
                 gameObjects.Add(new Tiles(TileTypes.Path, new Vector2(64 * i, 64 * 13)));
 
             }
-
 
 
             keyboard.CloseGame += ExitGame;

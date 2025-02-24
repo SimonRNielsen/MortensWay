@@ -22,9 +22,10 @@
         Portal,
         Key,
         Forest,
-        Wall,
+        Fence,
         Path,
-        Grass
+        Grass,
+        FencePath
 
     }
 
