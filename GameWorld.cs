@@ -26,6 +26,7 @@ namespace MortensWay
         internal static KeyboardInput keyboard = new KeyboardInput();
         private static List<GameObject<Enum>> gameObjects = new List<GameObject<Enum>>();
         private static List<GameObject<Enum>> newGameObjects = new List<GameObject<Enum>>();
+        public static HashSet<Tile> grid = new HashSet<Tile>();
         public static Dictionary<Enum, Texture2D> sprites = new Dictionary<Enum, Texture2D>();
         public static Dictionary<Enum, Texture2D[]> animations = new Dictionary<Enum, Texture2D[]>();
         public static Dictionary<Enum, SoundEffect> soundEffects = new Dictionary<Enum, SoundEffect>();
@@ -82,10 +83,15 @@ namespace MortensWay
             {
                 for (int i = 0; i < 15; i++)
                 {
-                    gameObjects.Add(new Tiles(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
+                    Tile t = new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j));
+                    gameObjects.Add(t);
+                    grid.Add(t);
                 }
             }
-
+            foreach (Tile entry in grid)
+            {
+                entry.CreateEdges(grid);
+            }
 
 
             keyboard.CloseGame += ExitGame;

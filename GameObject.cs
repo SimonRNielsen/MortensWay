@@ -158,7 +158,10 @@ namespace MortensWay
                     sprite = sprites[0];
             }
             catch { }
-            position = new Vector2(spawnPos.X + sprite.Width / 2, spawnPos.Y + sprite.Height / 2);
+            if (sprite != null)
+                position = new Vector2(spawnPos.X + sprite.Width / 2, spawnPos.Y + sprite.Height / 2);
+            else
+                position = spawnPos;
 
         }
 

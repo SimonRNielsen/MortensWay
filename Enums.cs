@@ -22,7 +22,7 @@
         Portal,
         Key,
         Forest,
-        Wall,
+        Fence,
         Path,
         Grass
 
