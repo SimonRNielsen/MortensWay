@@ -26,7 +26,7 @@ namespace MortensWay
                     Thread t = new Thread(SpawnMonster);
                     t.IsBackground = true;
                     t.Start();
-                    edges = null; //Evt. fjerne reference til denne edge fra andre via metode?
+                    edges = new HashSet<Edge>(); //Evt. fjerne reference til denne edge fra andre via metode?
                 }
             }
         }
