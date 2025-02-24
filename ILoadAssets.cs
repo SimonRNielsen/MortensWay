@@ -38,6 +38,7 @@ namespace MortensWay
             #region LogicItems
 
             sprites.Add(LogicItems.MousePointer, content.Load<Texture2D>("Sprites\\LogicItems\\mousePointer"));
+            sprites.Add(LogicItems.CollisionPixel, content.Load<Texture2D>("Sprites\\LogicItems\\pixel"));
 
             #endregion
             #region Tiles
