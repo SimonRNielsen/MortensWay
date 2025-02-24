@@ -77,13 +77,22 @@ namespace MortensWay
             AddContent = Content;
             mousePointer = new MousePointer<Enum>(LogicItems.MousePointer, ref gameObjects, false);
 
-              
             //grass
             for (int j = 0; j < 15; j++)
             {
                 for (int i = 0; i < 15; i++)
                 {
-                    Tile t = new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j));
+                    TileTypes tile;
+                    switch (i)
+                    {
+                        case 1 when j > 5: //Test
+                            tile = TileTypes.Fence;
+                            break;
+                        default:
+                            tile = TileTypes.Grass;
+                            break;
+                    }
+                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
                     gameObjects.Add(t);
                     grid.Add(t);
                 }

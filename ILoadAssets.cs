@@ -20,11 +20,13 @@ namespace MortensWay
         /// <param name="content">GameWorld logic</param>
         public static void Load(ContentManager content)
         {
+
             LoadSprites(content, GameWorld.sprites);
             LoadAnimations(content, GameWorld.animations);
             LoadSoundEffects(content, GameWorld.soundEffects);
             LoadMusic(content, GameWorld.music);
             GameWorld.gameFont = content.Load<SpriteFont>("gameFont");
+
         }
 
         /// <summary>
@@ -45,6 +47,7 @@ namespace MortensWay
 
             sprites.Add(TileTypes.Path, content.Load<Texture2D>("Sprites\\Tiles\\dirtTile"));
             sprites.Add(TileTypes.Grass, content.Load<Texture2D>("Sprites\\Tiles\\grassTile"));
+            sprites.Add(TileTypes.Fence, content.Load<Texture2D>("Sprites\\fence"));
 
             #endregion
             #region Avatars
