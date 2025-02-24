@@ -25,8 +25,8 @@
         Fence,
         Path,
         Grass,
-        FencePath
-
+        FencePath,
+        Stone
     }
 
     public enum MortensEnum

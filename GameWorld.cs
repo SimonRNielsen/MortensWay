@@ -109,12 +109,29 @@ namespace MortensWay
                 gameObjects.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
             }
 
-            //Dirt
-            for (int i = 2; i < 13; i++)
+            //Fence path
+            for (int i = 3; i < 12; i++)
             {
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 13)));
+                gameObjects.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
 
             }
+
+            //Dirt & stone
+            for (int i = 5; i < 10; i++)
+            {
+                for (int j = 4; j < 12; j++)
+                {
+                    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
+                    gameObjects.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
+                    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 10, 64 * j)));
+                }
+            }
+            for (int i = 4; i < 11; i++)
+            {
+                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
+
+            }
+
 
 
             keyboard.CloseGame += ExitGame;

@@ -120,6 +120,10 @@ namespace MortensWay
             {
                 this.layer = 0f;
             }
+            else if (type is TileTypes.FencePath)
+            {
+                this.color = Color.Red; //Only to test
+            }
 
         }
 
