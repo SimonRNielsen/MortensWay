@@ -57,10 +57,10 @@ namespace MortensWay
 
             foreach (Tile other in list)
             {
-                if (walkable)
+                if (walkable && this != other)
                 {
                     float distance = Vector2.Distance(position, other.Position);
-                    if (this != other && distance < 91)
+                    if (distance < 91)
                     {
                         int weight;
                         if (distance < 65)
