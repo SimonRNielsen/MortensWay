@@ -8,7 +8,8 @@
 
         MousePointer,
         CollisionPixel,
-        SelectionBox
+        SelectionBox,
+        Button
 
     }
 
