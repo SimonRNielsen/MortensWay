@@ -13,6 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin gameFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:gameFont.spritefont
+
 #begin Sprites/LogicItems/mousePointer.png
 /importer:TextureImporter
 /processor:TextureProcessor

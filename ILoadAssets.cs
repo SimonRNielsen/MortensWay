@@ -24,7 +24,7 @@ namespace MortensWay
             LoadAnimations(content, GameWorld.animations);
             LoadSoundEffects(content, GameWorld.soundEffects);
             LoadMusic(content, GameWorld.music);
-            GameWorld.gameFont = null;
+            GameWorld.gameFont = content.Load<SpriteFont>("gameFont");
         }
 
         /// <summary>
