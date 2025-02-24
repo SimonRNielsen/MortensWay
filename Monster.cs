@@ -12,7 +12,7 @@ namespace MortensWay
     {
         public Monster(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
-
+            position = spawnPos;
         }
 
         public override void LoadContent(ContentManager content)
