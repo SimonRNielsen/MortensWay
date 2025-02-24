@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MortensWay
 {
@@ -14,6 +15,21 @@ namespace MortensWay
         private HashSet<Edge> edges = new HashSet<Edge>();
 
         public HashSet<Edge> Edges { get => edges; }
+        public bool Walkable
+        {
+            get => walkable;
+            set
+            {
+                walkable = value;
+                if (value == false)
+                {
+                    Thread t = new Thread(SpawnMonster);
+                    t.IsBackground = true;
+                    t.Start();
+                    edges = null; //Evt. fjerne reference til denne edge fra andre via metode?
+                }
+            }
+        }
 
         public Tile(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
@@ -22,6 +38,9 @@ namespace MortensWay
                 case TileTypes.Forest:
                 case TileTypes.Fence:
                     walkable = false;
+                    break;
+                case TileTypes.FencePath:
+                    sprite = GameWorld.sprites[TileTypes.Path];
                     break;
                 default:
                     break;
@@ -39,7 +58,7 @@ namespace MortensWay
             foreach (Tile other in list)
             {
                 float distance = Vector2.Distance(position, other.Position);
-                if (this != other && walkable && distance < 91)
+                if (this != other && Walkable && distance < 91)
                 {
                     int weight;
                     if (distance < 65)
@@ -51,5 +70,15 @@ namespace MortensWay
             }
 
         }
+
+
+        private void SpawnMonster()
+        {
+
+            Thread.Sleep(3000);
+            GameWorld.AddObject(new Monster(Monstre.Goose, position));
+
+        }
+
     }
 }

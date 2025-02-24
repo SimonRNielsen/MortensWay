@@ -24,7 +24,8 @@
         Forest,
         Fence,
         Path,
-        Grass
+        Grass,
+        FencePath
 
     }
 

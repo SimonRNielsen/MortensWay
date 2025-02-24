@@ -17,7 +17,7 @@ namespace MortensWay
 
         public override void LoadContent(ContentManager content)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
