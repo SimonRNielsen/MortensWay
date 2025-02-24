@@ -13,6 +13,9 @@ namespace MortensWay
     {
         private bool walkable = true;
         private HashSet<Edge> edges = new HashSet<Edge>();
+        private HashSet<Edge> fakeEdges = new HashSet<Edge>();
+        private HashSet<Edge> realEdges;
+        private Monster monster;
 
         public HashSet<Edge> Edges { get => edges; }
         public bool Walkable
@@ -27,7 +30,7 @@ namespace MortensWay
                     Thread t = new Thread(SpawnMonster);
                     t.IsBackground = true;
                     t.Start();
-                    edges = new HashSet<Edge>(); //Evt. fjerne reference til denne edge fra andre via metode?
+                    edges = fakeEdges; //Evt. fjerne reference til denne edge fra andre via metode?
                 }
             }
         }
@@ -42,6 +45,7 @@ namespace MortensWay
                     break;
                 case TileTypes.FencePath:
                     sprite = GameWorld.sprites[TileTypes.Path];
+                    monster = new Monster(Monstre.Goose, spawnPos);
                     break;
                 default:
                     break;
@@ -73,14 +77,34 @@ namespace MortensWay
                 }
             }
 
+            realEdges = edges;
+
         }
 
-
+        /// <summary>
+        /// Self-explanatory
+        /// </summary>
         private void SpawnMonster()
         {
 
             Thread.Sleep(3000);
-            GameWorld.AddObject(new Monster(Monstre.Goose, position));
+            monster.IsAlive = true;
+            GameWorld.AddObject(monster);
+
+        }
+
+        /// <summary>
+        /// Used for restarting
+        /// </summary>
+        public void SetOriginalState()
+        {
+
+            if (type is TileTypes.FencePath)
+            {
+                monster.IsAlive = false;
+                walkable = true;
+                edges = realEdges;
+            }
 
         }
 
