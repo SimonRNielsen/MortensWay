@@ -117,21 +117,33 @@ namespace MortensWay
             }
 
             //Dirt & stone
-            for (int i = 5; i < 10; i++)
+            for (int i = 5; i < 9; i++)
             {
                 for (int j = 4; j < 12; j++)
                 {
-                    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
+                    if (j < 11)
+                    {
+                        gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
+                        gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
+                    }
                     gameObjects.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
-                    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 10, 64 * j)));
                 }
             }
-            for (int i = 4; i < 11; i++)
+            for (int i = 4; i < 10; i++)
             {
                 gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
 
-            }
+                //if (i == 
 
+            }
+            for (int i = 1; i < 4; i++)
+            {
+                if (i < 3)
+                {
+                    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
+                }
+                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
+            }
 
 
             keyboard.CloseGame += ExitGame;
