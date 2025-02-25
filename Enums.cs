@@ -17,15 +17,16 @@
     public enum TileTypes
     {
 
-        TowerA,
-        TowerB,
+        TowerKey, //Needing keys to open
+        TowerPortion, //Need to deliver the portion to
         Portal,
         Key,
         Forest,
-        Wall,
+        Fence,
         Path,
-        Grass
-
+        Grass,
+        FencePath,
+        Stone
     }
 
     public enum MortensEnum

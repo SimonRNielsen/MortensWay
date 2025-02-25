@@ -20,11 +20,13 @@ namespace MortensWay
         /// <param name="content">GameWorld logic</param>
         public static void Load(ContentManager content)
         {
+
             LoadSprites(content, GameWorld.sprites);
             LoadAnimations(content, GameWorld.animations);
             LoadSoundEffects(content, GameWorld.soundEffects);
             LoadMusic(content, GameWorld.music);
             GameWorld.gameFont = content.Load<SpriteFont>("gameFont");
+
         }
 
         /// <summary>
@@ -43,23 +45,20 @@ namespace MortensWay
             #endregion
             #region Tiles
 
+            sprites.Add(TileTypes.FencePath, content.Load<Texture2D>("Sprites\\Tiles\\dirtTile"));
             sprites.Add(TileTypes.Path, content.Load<Texture2D>("Sprites\\Tiles\\dirtTile"));
             sprites.Add(TileTypes.Grass, content.Load<Texture2D>("Sprites\\Tiles\\grassTile"));
-
-            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro0"));
-            //sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro1"));
-            //sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro2"));
-            //sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro3"));
-            //sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro4"));
-            //sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro5"));
-            //sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro6"));
-            //sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro7"));
+            sprites.Add(TileTypes.Fence, content.Load<Texture2D>("Sprites\\fence"));
+            sprites.Add(TileTypes.Stone, content.Load<Texture2D>("Sprites\\stone"));
+            sprites.Add(TileTypes.TowerKey, content.Load<Texture2D>("Sprites\\StormTower"));
+            sprites.Add(TileTypes.TowerPortion, content.Load<Texture2D>("Sprites\\IceTower"));
+            sprites.Add(TileTypes.Portal, content.Load<Texture2D>("Sprites\\Portal"));
 
             #endregion
             #region Avatars
 
+            sprites.Add(Monstre.Goose, content.Load<Texture2D>("Sprites\\aggro0"));
             sprites.Add(MortensEnum.Bishop, content.Load<Texture2D>("Sprites\\mortenBishop0"));
-            //sprites.Add(MortensEnum.Bishop, content.Load<Texture2D>("Sprites\\mortenBishop1"));
 
             #endregion
 
@@ -73,6 +72,8 @@ namespace MortensWay
         /// <param name="animations">Dictionary containing sprite-arrays with Enum as the key</param>
         private static void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
         {
+
+            
 
         }
 

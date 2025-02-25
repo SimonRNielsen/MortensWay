@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 
 namespace MortensWay
 {
-    internal class Tiles : GameObject<Enum>
+    internal class Monster : GameObject<Enum>
     {
-        public Tiles(Enum type, Vector2 spawnPos) : base(type, spawnPos)
+        public Monster(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
-            Type = type;
             position = spawnPos;
         }
 
         public override void LoadContent(ContentManager content)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
