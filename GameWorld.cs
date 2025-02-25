@@ -36,8 +36,8 @@ namespace MortensWay
         public Morten playerMorten;
 
         public Random random = new Random();
-        public static Tile key1;
-        public static Tile key2;
+        public static Tile keyOne;
+        public static Tile keyTwo;
 
         #endregion
         #endregion
@@ -84,13 +84,13 @@ namespace MortensWay
 
             //Adding Morten instants
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
-            //gameObjects.Add(playerMorten);
+            gameObjects.Add(playerMorten);
 
             //Adding key
-            key1 = new Tile(TileTypes.Key, KeyPlacement(random));
-            gameObjects.Add(key1);
-            key2 = new Tile(TileTypes.Key, KeyPlacement(random));
-            gameObjects.Add(key2);
+            keyOne = new Tile(TileTypes.Key, KeyPlacement(random));
+            gameObjects.Add(keyOne);
+            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random));
+            gameObjects.Add(keyTwo);
 
             #region gamemap
             //grass
@@ -311,10 +311,10 @@ namespace MortensWay
 
         public Vector2 KeyPlacement(Random random)
         {
-            int rnd1 = random.Next(0, 16);
-            int rnd21 = random.Next(0, 16);
+            int rndX = random.Next(0, 16) * 64;
+            int rndY = random.Next(0, 16) * 64;
 
-            return new Vector2(rnd1 * 64, rnd21 * 64);
+            return new Vector2(rndX, rndY);
         }
 
 
