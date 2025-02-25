@@ -39,7 +39,7 @@ namespace MortensWay
         {
             switch (type)
             {
-                case TileTypes.Forest:
+                case TileTypes.Forest: //Skal det ikke være stone
                 case TileTypes.Fence:
                     walkable = false;
                     break;
@@ -114,7 +114,7 @@ namespace MortensWay
         {
             if (type is TileTypes.Fence || type is TileTypes.TowerPortion || type is TileTypes.TowerKey)
             {
-                this.layer = 1f;
+                this.layer = 0.90f;
             }
             else if (type is TileTypes.Grass)
             {
