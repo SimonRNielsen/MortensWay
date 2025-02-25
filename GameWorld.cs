@@ -39,6 +39,9 @@ namespace MortensWay
         public static Tile keyOne;
         public static Tile keyTwo;
 
+        //private static List<T> tileObjects = new List<Tile>();
+
+
         #endregion
         #endregion
         #region Properties
@@ -75,7 +78,7 @@ namespace MortensWay
             _graphics.PreferredBackBufferWidth = 960;
             _graphics.PreferredBackBufferHeight = 960;
             _graphics.ApplyChanges();
-            
+
             base.Initialize();
 
             //Instantiates mousePointer and makes "Content" static
@@ -87,9 +90,9 @@ namespace MortensWay
             gameObjects.Add(playerMorten);
 
             //Adding key
-            keyOne = new Tile(TileTypes.Key, KeyPlacement(random));
+            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
             gameObjects.Add(keyOne);
-            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random));
+            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
             gameObjects.Add(keyTwo);
 
             #region gamemap
@@ -172,7 +175,6 @@ namespace MortensWay
             gameObjects.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
 
             #endregion
-
 
             keyboard.CloseGame += ExitGame;
 
@@ -309,12 +311,45 @@ namespace MortensWay
             Exit();
         }
 
-        public Vector2 KeyPlacement(Random random)
+        /// <summary>
+        /// Finding a random walkable place for the key to spawn 
+        /// </summary>
+        /// <param name="random">A variabel from the Random class</param>
+        /// <param name="grid">HashSet grid over the tiles</param>
+        /// <returns></returns>
+        public Vector2 KeyPlacement(Random random, HashSet<Tile> grid)
         {
-            int rndX = random.Next(0, 16) * 64;
-            int rndY = random.Next(0, 16) * 64;
+            bool finding = true;
+            Vector2 placement = Vector2.Zero;
 
-            return new Vector2(rndX, rndY);
+            while (finding)
+            {
+                //Random generation the x and y position
+                int rndX = random.Next(0, 16);
+                int rndY = random.Next(0, 16);
+
+                //The random generatet placement
+                placement = new Vector2(rndX * 64, rndY * 64);
+
+                //Tjecking if the position is walkable
+                foreach (Tile item in grid)
+                {
+                    if (item.Position == placement && item.Walkable == true)
+                    {
+                        if (!item.Type.Equals(TileTypes.Portal) || !item.Type.Equals(TileTypes.TowerKey) || !item.Type.Equals(TileTypes.TowerPortion))
+                        {
+                            //If the position of the tile is walkable then change "finding" to false to break the while loop
+                            finding = false;
+                        }
+                    }
+                    continue;
+                }
+
+                finding = false;
+            }
+
+            return placement;
+
         }
 
 
