@@ -156,17 +156,6 @@ namespace MortensWay
                 entry.CreateEdges(grid);
             }
             
-            //for (int i = 1; i < 5; i++)
-            //{
-            //    if (i < 3)
-            //    {
-            //        gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
-            //    }
-            //    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
-            //}
-
-
-
             #endregion
 
             keyboard.CloseGame += ExitGame;
