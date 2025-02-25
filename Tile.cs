@@ -63,7 +63,7 @@ namespace MortensWay
         {
             switch (type)
             {
-                case TileTypes.Forest: //Skal det ikke være stone
+                case TileTypes.Stone: //Skal det ikke være stone
                 case TileTypes.Fence:
                     walkable = false;
                     break;

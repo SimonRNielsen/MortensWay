@@ -18,7 +18,7 @@ namespace MortensWay
         protected Vector2 velocity;
         protected SpriteEffects[] spriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected float fps = 20;
-        protected float layer = 0.5f;
+        protected float layer = 0.3f;
         protected float scale = 1;
         protected float timeElapsed;
         protected float speed;

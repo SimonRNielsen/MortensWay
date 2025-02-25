@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.Threading;
 using System;
+using System.Diagnostics;
 
 namespace MortensWay
 {
@@ -89,34 +90,9 @@ namespace MortensWay
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
             gameObjects.Add(playerMorten);
 
-            //Adding key
-            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            gameObjects.Add(keyOne);
-            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            gameObjects.Add(keyTwo);
+
 
             #region gamemap
-            //grass
-            for (int j = 0; j < 15; j++)
-            {
-                for (int i = 0; i < 15; i++)
-                {
-                    TileTypes tile;
-                    switch (i)
-                    {
-                        //case 1 when j > 5: //Test
-                        //    tile = TileTypes.Fence;
-                        //    break;
-                        default:
-                            tile = TileTypes.Grass;
-                            break;
-                    }
-                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
-                    // gameObjects.Add(t);
-                    grid.Add(t);
-                }
-            }
-
             //Fence
             for (int i = 3; i < 12; i++)
             {
@@ -165,11 +141,74 @@ namespace MortensWay
             grid.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
             grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
 
-
             //Towers & Portal
             grid.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
             grid.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
             grid.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
+
+
+            //grass
+            #region grass
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j))); 
+                }
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 3; j < 10; j++)
+                {
+                    if (i < 4)
+                    {
+                        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
+                    }
+                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * (i + 10), 64 * j)));
+                }
+            }
+            for (int i = 10; i < 15; i++)
+            {
+                grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 0, 64 * i)));
+                grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 14, 64 * i)));
+                if (i < 13 || i > 13)
+                {
+                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 1, 64 * i)));
+                }
+            }
+            for (int i = 3; i < 13; i++)
+            {
+                if (i < 5 || i > 8)
+                {
+                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * 11)));
+                }
+            }
+            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 2, 64 * 14)));
+            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 14)));
+            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 13, 64 * 14)));
+            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 12)));
+            #endregion
+
+            //for (int j = 0; j < 15; j++)
+            //{
+            //    for (int i = 0; i < 15; i++)
+            //    {
+            //        TileTypes tile;
+            //        switch (i)
+            //        {
+            //            //case 1 when j > 5: //Test
+            //            //    tile = TileTypes.Fence;
+            //            //    break;
+            //            default:
+            //                tile = TileTypes.Grass;
+            //                break;
+            //        }
+            //        Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
+            //        //gameObjects.Add(t);
+            //        grid.Add(t);
+            //    }
+            //}
+
 
             foreach (Tile t in grid)
             {
@@ -183,6 +222,15 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
+
+            //Adding key
+            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            gameObjects.Add(keyOne);
+            grid.Add(keyOne);
+            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            gameObjects.Add(keyTwo);
+            grid.Add(keyTwo);
+
 
             keyboard.CloseGame += ExitGame;
 
@@ -343,27 +391,35 @@ namespace MortensWay
             while (finding)
             {
                 //Random generation the x and y position
-                int rndX = random.Next(0, 16);
-                int rndY = random.Next(0, 16);
+                int rndX = random.Next(0, 29);
+                int rndY = random.Next(0, 29);
 
                 //The random generatet placement
-                placement = new Vector2(rndX * 64, rndY * 64);
+                placement = new Vector2(rndX * 32, rndY * 32);
 
                 //Tjecking if the position is walkable
                 foreach (Tile item in grid)
                 {
-                    if (item.Position == placement && item.Walkable == true)
+                    if (item.Position == placement/* && item.Walkable == true*/)
                     {
-                        if (!item.Type.Equals(TileTypes.Portal) || !item.Type.Equals(TileTypes.TowerKey) || !item.Type.Equals(TileTypes.TowerPortion))
+                        if (item.Walkable == false)
                         {
+                            break;
+                        }
+                        //else if (!item.Type.Equals(TileTypes.Portal) || !item.Type.Equals(TileTypes.TowerKey) || !item.Type.Equals(TileTypes.TowerPortion) || !item.Type.Equals(TileTypes.Key))
+                        //{
+                        //    break;
+                        //}
+                        else
+                        {
+                            Debug.WriteLine($"{item.Type} {item.Position} {item.Walkable}");
                             //If the position of the tile is walkable then change "finding" to false to break the while loop
                             finding = false;
+                            return placement;
                         }
                     }
-                    continue;
                 }
 
-                finding = false;
             }
 
             return placement;
