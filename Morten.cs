@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace MortensWay
 {
-    internal class Morten : GameObject<Enum>
+    public class Morten : GameObject<Enum>
     {
         public Morten(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
+            this.layer = 1f;
 
         }
 
