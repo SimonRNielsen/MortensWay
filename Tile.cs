@@ -34,18 +34,18 @@ namespace MortensWay
                     HashSet<Edge> removeEdges = new HashSet<Edge>(); //Hashset for edges that should be removed
                     foreach (Edge e in edges) //Looks at all edges going from this tile
                     {
-                        foreach (Edge edge in e.From.edges) //Looks at all the edges from the Tile that leads to this tile
+                        foreach (Edge f in e.To.edges) //Looks at all the edges from the Tile that this tile leads to
                         {
-                            if (edge.To == this) //If the edge leads to this tile, the edge is added to a remove list
+                            if (f.To == this) //If the edge leads to this tile, the edge is added to a remove list
                             {
-                                removeEdges.Add(edge);
+                                removeEdges.Add(f);
                             }
                         }
                         if(removeEdges.Count > 0) 
                         {
                         foreach (Edge remove in removeEdges) //All removeEdges are removed from the tile he Tile that leads to this tile
                             {
-                            e.From.edges.Remove(remove);
+                            e.To.edges.Remove(remove);
                         }
                         }
                     }
