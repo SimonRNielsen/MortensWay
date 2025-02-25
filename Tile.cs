@@ -72,7 +72,7 @@ namespace MortensWay
         {
             switch (type)
             {
-                case TileTypes.Stone: //Skal det ikke være stone
+                case TileTypes.Stone:
                 case TileTypes.Fence:
                     walkable = false;
                     break;
@@ -98,7 +98,7 @@ namespace MortensWay
 
             foreach (Tile other in list)
             {
-                if (walkable && this != other)
+                if (walkable && this != other && other.Walkable)
                 {
                     float distance = Vector2.Distance(position, other.Position);
                     if (distance < 91)
@@ -113,7 +113,7 @@ namespace MortensWay
                 }
             }
 
-            realEdges = edges;
+            realEdges = edges; //Måske udkommenteres?
 
         }
 
