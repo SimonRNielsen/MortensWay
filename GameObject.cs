@@ -106,12 +106,12 @@ namespace MortensWay
         /// <summary>
         /// Property for remote reading of current sprite
         /// </summary>
-        public virtual Texture2D Sprite { get => sprite; }
+        public virtual Texture2D Sprite { get => sprite; set => sprite = value; }
 
         /// <summary>
         /// Property for getting/setting the Enum designating what the object identifies as
         /// </summary>
-        public virtual T Type { get => type; protected set => type = value; }
+        public virtual T Type { get => type; set => type = value; }
 
         /// <summary>
         /// Property for getting/setting position of the object

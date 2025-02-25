@@ -89,11 +89,6 @@ namespace MortensWay
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
             gameObjects.Add(playerMorten);
 
-            //Adding key
-            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            gameObjects.Add(keyOne);
-            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            gameObjects.Add(keyTwo);
 
             #region gamemap
             //grass
@@ -120,26 +115,24 @@ namespace MortensWay
                             tile = TileTypes.FencePath;
                             break;
                         case 1 when j == 13:
-                        case 2 when j < 14 && j > 10:
+                        case 2 when j > 10 && j < 14:
                         case 3 when j == 11:
-                        case 4 when j < 12 && j > 3:
-                        case 4 when j == 3:
+                        case 4 when j > 2 && j < 12:
                         case 5 when j == 3:
                         case 6 when j == 3:
                         case 7 when j == 3:
                         case 8 when j == 3:
-                        case 9 when j == 3:
-                        case 9 when j < 12 && j > 3:
+                        case 9 when j > 2 && j < 12:
                         case 10 when j == 11:
                         case 11 when j == 11:
                         case 12 when j == 11 || j == 13:
                         case 13 when j == 11 || j == 13:
                             tile = TileTypes.Path;
                             break;
-                        case 5 when j < 12 && j > 3:
-                        case 6 when j < 12 && j > 3:
-                        case 7 when j < 12 && j > 3:
-                        case 8 when j < 12 && j > 3:
+                        case 5 when j > 3 && j < 12:
+                        case 6 when j > 3 && j < 12:
+                        case 7 when j > 3 && j < 12:
+                        case 8 when j > 3 && j < 12:
                             tile = TileTypes.Stone;
                             break;
                         default:
@@ -151,6 +144,11 @@ namespace MortensWay
                     grid.Add(t);
                 }
             }
+            //Adding key
+            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            gameObjects.Add(keyOne);
+            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            gameObjects.Add(keyTwo);
             foreach (Tile entry in grid)
             {
                 entry.CreateEdges(grid);
@@ -307,8 +305,8 @@ namespace MortensWay
             while (finding)
             {
                 //Random generation the x and y position
-                int rndX = random.Next(0, 16);
-                int rndY = random.Next(0, 16);
+                int rndX = random.Next(0, 15);
+                int rndY = random.Next(0, 15);
 
                 //The random generatet placement
                 placement = new Vector2(rndX * 64, rndY * 64);
@@ -316,9 +314,9 @@ namespace MortensWay
                 //Tjecking if the position is walkable
                 foreach (Tile item in grid)
                 {
-                    if (item.Position == placement && item.Walkable == true)
+                    if (item.Position == placement && item.Walkable && !item.FencePath)
                     {
-                        if (!item.Type.Equals(TileTypes.Portal) || !item.Type.Equals(TileTypes.TowerKey) || !item.Type.Equals(TileTypes.TowerPortion))
+                        if (!item.Type.Equals(TileTypes.Portal) || !item.Type.Equals(TileTypes.TowerKey) || !item.Type.Equals(TileTypes.TowerPortion) || !item.Type.Equals(TileTypes.Fence) || !item.Type.Equals(TileTypes.FencePath) || !item.Type.Equals(TileTypes.Key) || !item.Type.Equals(TileTypes.Stone))
                         {
                             //If the position of the tile is walkable then change "finding" to false to break the while loop
                             finding = false;

@@ -13,6 +13,7 @@ namespace MortensWay
     public class Tile : GameObject<Enum>
     {
         private bool walkable = true;
+        private bool fencePath = false;
         private HashSet<Edge> edges = new HashSet<Edge>();
         private HashSet<Edge> fakeEdges = new HashSet<Edge>();
         private HashSet<Edge> realEdges;
@@ -53,12 +54,13 @@ namespace MortensWay
                 }
             }
         }
+        public bool FencePath { get => fencePath; }
 
         public Tile(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
             switch (type)
             {
-                case TileTypes.Forest: //Skal det ikke være stone
+                case TileTypes.Stone: //Skal det ikke være stone
                 case TileTypes.Fence:
                     walkable = false;
                     break;
@@ -146,7 +148,6 @@ namespace MortensWay
             else if (type is TileTypes.Key)
             {
                 this.layer = 1f;
-                this.scale = 0.4f;
             }
 
         }
