@@ -149,65 +149,65 @@ namespace MortensWay
 
             //grass
             #region grass
-            for (int i = 0; i < 15; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j))); 
-                }
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 3; j < 10; j++)
-                {
-                    if (i < 4)
-                    {
-                        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
-                    }
-                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * (i + 10), 64 * j)));
-                }
-            }
-            for (int i = 10; i < 15; i++)
-            {
-                grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 0, 64 * i)));
-                grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 14, 64 * i)));
-                if (i < 13 || i > 13)
-                {
-                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 1, 64 * i)));
-                }
-            }
-            for (int i = 3; i < 13; i++)
-            {
-                if (i < 5 || i > 8)
-                {
-                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * 11)));
-                }
-            }
-            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 2, 64 * 14)));
-            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 14)));
-            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 13, 64 * 14)));
-            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 12)));
-            #endregion
-
-            //for (int j = 0; j < 15; j++)
+            //for (int i = 0; i < 15; i++)
             //{
-            //    for (int i = 0; i < 15; i++)
+            //    for (int j = 0; j < 3; j++)
             //    {
-            //        TileTypes tile;
-            //        switch (i)
-            //        {
-            //            //case 1 when j > 5: //Test
-            //            //    tile = TileTypes.Fence;
-            //            //    break;
-            //            default:
-            //                tile = TileTypes.Grass;
-            //                break;
-            //        }
-            //        Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
-            //        //gameObjects.Add(t);
-            //        grid.Add(t);
+            //        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j))); 
             //    }
             //}
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    for (int j = 3; j < 10; j++)
+            //    {
+            //        if (i < 4)
+            //        {
+            //            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
+            //        }
+            //        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * (i + 10), 64 * j)));
+            //    }
+            //}
+            //for (int i = 10; i < 15; i++)
+            //{
+            //    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 0, 64 * i)));
+            //    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 14, 64 * i)));
+            //    if (i < 13 || i > 13)
+            //    {
+            //        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 1, 64 * i)));
+            //    }
+            //}
+            //for (int i = 3; i < 13; i++)
+            //{
+            //    if (i < 5 || i > 8)
+            //    {
+            //        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * 11)));
+            //    }
+            //}
+            //grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 2, 64 * 14)));
+            //grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 14)));
+            //grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 13, 64 * 14)));
+            //grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 12)));
+            #endregion
+
+            for (int j = 0; j < 15; j++)
+            {
+                for (int i = 0; i < 15; i++)
+                {
+                    TileTypes tile;
+                    switch (i)
+                    {
+                        //case 1 when j > 5: //Test
+                        //    tile = TileTypes.Fence;
+                        //    break;
+                        default:
+                            tile = TileTypes.Grass;
+                            break;
+                    }
+                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
+                    //gameObjects.Add(t);
+                    grid.Add(t);
+                }
+            }
 
 
             foreach (Tile t in grid)
@@ -400,16 +400,16 @@ namespace MortensWay
                 //Tjecking if the position is walkable
                 foreach (Tile item in grid)
                 {
-                    if (item.Position == placement/* && item.Walkable == true*/)
+                    if (item.Position == placement)
                     {
-                        if (item.Walkable == false)
+                        if (item.Walkable == false || item.Type.Equals(TileTypes.FencePath))
                         {
                             break;
                         }
-                        //else if (!item.Type.Equals(TileTypes.Portal) || !item.Type.Equals(TileTypes.TowerKey) || !item.Type.Equals(TileTypes.TowerPortion) || !item.Type.Equals(TileTypes.Key))
-                        //{
-                        //    break;
-                        //}
+                        else if (item.Type.Equals(TileTypes.Portal) || item.Type.Equals(TileTypes.TowerKey) || item.Type.Equals(TileTypes.TowerPortion) || item.Type.Equals(TileTypes.Key))
+                        {
+                            break;
+                        }
                         else
                         {
                             Debug.WriteLine($"{item.Type} {item.Position} {item.Walkable}");
