@@ -9,5 +9,6 @@ namespace MortensWay
 {
     public class AStar
     {
+
     }
 }

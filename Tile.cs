@@ -17,6 +17,7 @@ namespace MortensWay
         private HashSet<Edge> realEdges;
         private Monster monster;
 
+
         public HashSet<Edge> Edges { get => edges; }
         public bool Walkable
         {
