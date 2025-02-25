@@ -28,7 +28,7 @@ namespace MortensWay
         //        if (to.Walkable)
         //            return to;
         //        else 
-        //            return from;
+        //            return null;
         //    }
         //}
 
