@@ -19,5 +19,21 @@ namespace MortensWay
         {
             throw new NotImplementedException();
         }
+
+        //public void Update()
+        //{
+        //    if (Rectangle.Contains(new Point(MousePointer.GetState().X, Mouse.GetState().Y)) && Mouse.GetState().LeftButton == ButtonState.Pressed)
+        //    {
+        //        OnClick();
+        //    }
+
+        //}
+
+        //public void OnClick()
+        //{
+        //    GameWorld.Instance.OnButtonClick(button);
+
+
+        //}
     }
 }
