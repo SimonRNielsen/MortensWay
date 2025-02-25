@@ -28,7 +28,7 @@ namespace MortensWay
             {
                 if (walkable)
                     return edges;
-                else 
+                else
                     return fakeEdges;
             }
         }
@@ -95,23 +95,23 @@ namespace MortensWay
 
         public void CreateEdges(HashSet<Tile> list)
         {
-
-            foreach (Tile other in list)
-            {
-                if (walkable && this != other && other.Walkable)
+            if (walkable)
+                foreach (Tile other in list)
                 {
-                    float distance = Vector2.Distance(position, other.Position);
-                    if (distance < 91)
+                    if (this != other && other.Walkable)
                     {
-                        int weight;
-                        if (distance < 65)
-                            weight = 10;
-                        else
-                            weight = 14;
-                        Edges.Add(new Edge(weight, this, other));
+                        float distance = Vector2.Distance(position, other.Position);
+                        if (distance < 91)
+                        {
+                            int weight;
+                            if (distance < 65)
+                                weight = 10;
+                            else
+                                weight = 14;
+                            Edges.Add(new Edge(weight, this, other));
+                        }
                     }
                 }
-            }
 
             realEdges = edges; //Måske udkommenteres?
 
