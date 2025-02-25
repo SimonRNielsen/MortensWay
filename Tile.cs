@@ -112,7 +112,7 @@ namespace MortensWay
 
         public void LayerType(Enum type)
         {
-            if (type is TileTypes.Fence)
+            if (type is TileTypes.Fence || type is TileTypes.TowerPortion || type is TileTypes.TowerKey)
             {
                 this.layer = 1f;
             }

@@ -77,6 +77,7 @@ namespace MortensWay
             AddContent = Content;
             mousePointer = new MousePointer<Enum>(LogicItems.MousePointer, ref gameObjects, false);
 
+            #region gamemap
             //grass
             for (int j = 0; j < 15; j++)
             {
@@ -132,11 +133,8 @@ namespace MortensWay
             for (int i = 4; i < 10; i++)
             {
                 gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
-
-                //if (i == 
-
             }
-            for (int i = 1; i < 4; i++)
+            for (int i = 1; i < 5; i++)
             {
                 if (i < 3)
                 {
@@ -144,6 +142,21 @@ namespace MortensWay
                 }
                 gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
             }
+            for (int i = 0; i < 3; i++)
+            {
+                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
+                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
+            }
+            gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
+            gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
+
+
+            //Towers & Portal
+            gameObjects.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
+            gameObjects.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
+            gameObjects.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
+
+            #region
 
 
             keyboard.CloseGame += ExitGame;
