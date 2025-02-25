@@ -37,7 +37,7 @@ namespace MortensWay
             get => walkable;
             set
             {
-                if (value == false && walkable == true)
+                if (value == false && walkable == true && type.Equals(TileTypes.FencePath))
                 {
                     walkable = value;
 
