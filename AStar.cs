@@ -9,12 +9,5 @@ namespace MortensWay
 {
     public class AStar
     {
-        Dictionary<Point, Cell> cells;
-
-        public AStar()
-        {
-        }
-
-        private HashSet<Cell> openList = new HashSet<Cell>();
     }
 }
