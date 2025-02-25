@@ -124,6 +124,11 @@ namespace MortensWay
             {
                 this.color = Color.Red; //Only to test
             }
+            else if (type is TileTypes.Key)
+            {
+                this.layer = 1f;
+                this.scale = 0.4f;
+            }
 
         }
 

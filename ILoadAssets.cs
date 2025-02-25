@@ -53,6 +53,7 @@ namespace MortensWay
             sprites.Add(TileTypes.TowerKey, content.Load<Texture2D>("Sprites\\StormTower"));
             sprites.Add(TileTypes.TowerPortion, content.Load<Texture2D>("Sprites\\IceTower"));
             sprites.Add(TileTypes.Portal, content.Load<Texture2D>("Sprites\\Portal"));
+            sprites.Add(TileTypes.Key, content.Load<Texture2D>("Sprites\\key"));
 
             #endregion
             #region Avatars
