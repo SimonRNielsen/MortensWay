@@ -12,8 +12,34 @@ namespace MortensWay
 
         public static Tile BFSMethod(Tile startNode, Tile endNode)
         {
+            //ChatGPTs solution:
+            Queue<Tile> queue = new Queue<Tile>();
+            startNode.Discovered = true;
+            queue.Enqueue(startNode);
+            while(queue.Count >0)
+            {
+                Tile currentTile = queue.Dequeue();
+                if (currentTile == endNode)
+                {
+                    return currentTile;
+                }
+                foreach (Edge e in currentTile.Edges)
+                {
+                    Tile neighbor = e.To;
+                    if(!neighbor.Discovered)
+                    {
+                        neighbor.Discovered = true;
+                        neighbor.Parent = currentTile;
+                        queue.Enqueue(neighbor);
+                    }
+                }
+
+            }
+
+            /*The following is BFS as demonstrated in the asignment, but it creates an infinite loop:
+             *     
             Queue<Edge> stack = new Queue<Edge>();
-            Edge startEdge = new Edge(0,startNode, startNode);
+            Edge startEdge = new Edge(0, startNode, startNode);
             stack.Enqueue(startEdge);
 
             while (stack.Count > 0)
@@ -35,7 +61,7 @@ namespace MortensWay
                         stack.Enqueue(e);
                     }
                 }
-            }
+            }*/
             return null;
 
         }

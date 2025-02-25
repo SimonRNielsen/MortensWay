@@ -99,7 +99,7 @@ namespace MortensWay
                             break;
                     }
                     Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
-                   // gameObjects.Add(t);
+                    // gameObjects.Add(t);
                     grid.Add(t);
                 }
             }
@@ -107,7 +107,7 @@ namespace MortensWay
             //Fence
             for (int i = 3; i < 12; i++)
             {
-                
+
                 grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
                 grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
             }
@@ -158,7 +158,7 @@ namespace MortensWay
             grid.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
             grid.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
 
-            foreach(Tile t in grid)
+            foreach (Tile t in grid)
             {
                 gameObjects.Add(t);
             }
@@ -174,8 +174,9 @@ namespace MortensWay
 
             keyboard.CloseGame += ExitGame;
 
+            //Test of BFS: 
             Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion));
+            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
             BFS.BFSMethod(startNode, endNode);
             List<Tile> pathTest = BFS.FindPath(endNode, startNode);
             foreach (Tile t in pathTest)
