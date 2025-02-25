@@ -17,8 +17,12 @@ namespace MortensWay
         private HashSet<Edge> fakeEdges = new HashSet<Edge>();
         private HashSet<Edge> realEdges;
         private Monster monster;
+        private bool discovered = false;
+        private Tile parent;
 
         public HashSet<Edge> Edges { get => edges; }
+        public bool Discovered { get => discovered; set => discovered = value; }
+        public Tile Parent { get => parent; set => parent = value; }
         public bool Walkable
         {
             get => walkable;
@@ -53,6 +57,7 @@ namespace MortensWay
                 }
             }
         }
+
 
         public Tile(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
@@ -141,7 +146,7 @@ namespace MortensWay
             }
             else if (type is TileTypes.FencePath)
             {
-                this.color = Color.Red; //Only to test
+                this.Color = Color.Red; //Only to test
             }
 
         }

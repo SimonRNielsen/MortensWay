@@ -71,7 +71,7 @@ namespace MortensWay
             _graphics.PreferredBackBufferWidth = 960;
             _graphics.PreferredBackBufferHeight = 960;
             _graphics.ApplyChanges();
-            
+
             base.Initialize();
 
             //Instantiates mousePointer and makes "Content" static
@@ -99,26 +99,23 @@ namespace MortensWay
                             break;
                     }
                     Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
-                    gameObjects.Add(t);
+                   // gameObjects.Add(t);
                     grid.Add(t);
                 }
-            }
-            foreach (Tile entry in grid)
-            {
-                entry.CreateEdges(grid);
             }
 
             //Fence
             for (int i = 3; i < 12; i++)
             {
-                gameObjects.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
-                gameObjects.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
+                
+                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
+                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
             }
 
             //Fence path
             for (int i = 3; i < 12; i++)
             {
-                gameObjects.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
+                grid.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
 
             }
 
@@ -129,45 +126,65 @@ namespace MortensWay
                 {
                     if (j < 11)
                     {
-                        gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
-                        gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
+                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
+                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
                     }
-                    gameObjects.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
+                    grid.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
                 }
             }
             for (int i = 4; i < 10; i++)
             {
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
             }
             for (int i = 1; i < 5; i++)
             {
                 if (i < 3)
                 {
-                    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
+                    grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
                 }
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
             }
             for (int i = 0; i < 3; i++)
             {
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
             }
-            gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
-            gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
+            grid.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
+            grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
 
 
             //Towers & Portal
-            gameObjects.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
-            gameObjects.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
-            gameObjects.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
+            grid.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
+            grid.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
+            grid.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
+
+            foreach(Tile t in grid)
+            {
+                gameObjects.Add(t);
+            }
 
             #endregion
+            //Add edges to tiles in grid:
+
+            foreach (Tile entry in grid)
+            {
+                entry.CreateEdges(grid);
+            }
 
 
             keyboard.CloseGame += ExitGame;
 
+            Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
+            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion));
+            BFS.BFSMethod(startNode, endNode);
+            List<Tile> pathTest = BFS.FindPath(endNode, startNode);
+            foreach (Tile t in pathTest)
+            {
+                t.Color = Color.Yellow;
 
+            }
         }
+
 
 
         protected override void LoadContent()
