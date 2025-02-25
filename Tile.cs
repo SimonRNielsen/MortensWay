@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using SharpDX.Direct2D1.Effects;
 
 namespace MortensWay
 {
@@ -30,7 +31,25 @@ namespace MortensWay
                     Thread t = new Thread(SpawnMonster);
                     t.IsBackground = true;
                     t.Start();
-                    edges = fakeEdges; //Evt. fjerne reference til denne edge fra andre via metode?
+                    HashSet<Edge> removeEdges = new HashSet<Edge>(); //Hashset for edges that should be removed
+                    foreach (Edge e in edges) //Looks at all edges going from this tile
+                    {
+                        foreach (Edge edge in e.From.edges) //Looks at all the edges from the Tile that leads to this tile
+                        {
+                            if (edge.To == this) //If the edge leads to this tile, the edge is added to a remove list
+                            {
+                                removeEdges.Add(edge);
+                            }
+                        }
+                        if(removeEdges.Count > 0) 
+                        {
+                        foreach (Edge remove in removeEdges) //All removeEdges are removed from the tile he Tile that leads to this tile
+                            {
+                            e.From.edges.Remove(remove);
+                        }
+                        }
+                    }
+                    edges = fakeEdges; //Evt. fjerne reference til denne edge fra andre via metode? -> Se ovenfor
                 }
             }
         }
