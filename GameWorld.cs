@@ -104,9 +104,44 @@ namespace MortensWay
                     TileTypes tile;
                     switch (i)
                     {
-                        //case 1 when j > 5: //Test
-                        //    tile = TileTypes.Fence;
-                        //    break;
+                        case 0 when j == 13:
+                            tile = TileTypes.Portal;
+                            break;
+                        case 1 when j == 3:
+                            tile = TileTypes.TowerKey;
+                            break;
+                        case 13 when j == 12:
+                            tile = TileTypes.TowerPortion;
+                            break;
+                        case > 2 when i < 12 && (j == 12 || j == 14):
+                            tile = TileTypes.Fence;
+                            break;
+                        case > 2 when i < 12 && j == 13:
+                            tile = TileTypes.FencePath;
+                            break;
+                        case 1 when j == 13:
+                        case 2 when j < 14 && j > 10:
+                        case 3 when j == 11:
+                        case 4 when j < 12 && j > 3:
+                        case 4 when j == 3:
+                        case 5 when j == 3:
+                        case 6 when j == 3:
+                        case 7 when j == 3:
+                        case 8 when j == 3:
+                        case 9 when j == 3:
+                        case 9 when j < 12 && j > 3:
+                        case 10 when j == 11:
+                        case 11 when j == 11:
+                        case 12 when j == 11 || j == 13:
+                        case 13 when j == 11 || j == 13:
+                            tile = TileTypes.Path;
+                            break;
+                        case 5 when j < 12 && j > 3:
+                        case 6 when j < 12 && j > 3:
+                        case 7 when j < 12 && j > 3:
+                        case 8 when j < 12 && j > 3:
+                            tile = TileTypes.Stone;
+                            break;
                         default:
                             tile = TileTypes.Grass;
                             break;
@@ -120,59 +155,17 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-
-            //Fence
-            for (int i = 3; i < 12; i++)
-            {
-                gameObjects.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
-                gameObjects.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
-            }
-
-            //Fence path
-            for (int i = 3; i < 12; i++)
-            {
-                gameObjects.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
-
-            }
-
-            //Dirt & stone
-            for (int i = 5; i < 9; i++)
-            {
-                for (int j = 4; j < 12; j++)
-                {
-                    if (j < 11)
-                    {
-                        gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
-                        gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
-                    }
-                    gameObjects.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
-                }
-            }
-            for (int i = 4; i < 10; i++)
-            {
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
-            }
-            for (int i = 1; i < 5; i++)
-            {
-                if (i < 3)
-                {
-                    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
-                }
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
-                gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
-            }
-            gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
-            gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
+            
+            //for (int i = 1; i < 5; i++)
+            //{
+            //    if (i < 3)
+            //    {
+            //        gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
+            //    }
+            //    gameObjects.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
+            //}
 
 
-            //Towers & Portal
-            gameObjects.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
-            gameObjects.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
-            gameObjects.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
 
             #endregion
 
