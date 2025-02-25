@@ -145,15 +145,17 @@ namespace MortensWay
                 }
             }
             //Adding key
-            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            gameObjects.Add(keyOne);
-            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            gameObjects.Add(keyTwo);
+            //keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            //gameObjects.Add(keyOne);
+            //keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            //gameObjects.Add(keyTwo);
+            keyOne = ChangeToKey();
+            keyTwo = ChangeToKey();
             foreach (Tile entry in grid)
             {
                 entry.CreateEdges(grid);
             }
-            
+
             #endregion
 
             keyboard.CloseGame += ExitGame;
@@ -314,7 +316,7 @@ namespace MortensWay
                 //Tjecking if the position is walkable
                 foreach (Tile item in grid)
                 {
-                    if (item.Position == placement && item.Walkable && !item.FencePath)
+                    if (item.Position == placement && item.Walkable == true && !item.FencePath)
                     {
                         if (!item.Type.Equals(TileTypes.Portal) || !item.Type.Equals(TileTypes.TowerKey) || !item.Type.Equals(TileTypes.TowerPortion) || !item.Type.Equals(TileTypes.Fence) || !item.Type.Equals(TileTypes.FencePath) || !item.Type.Equals(TileTypes.Key) || !item.Type.Equals(TileTypes.Stone))
                         {
@@ -329,6 +331,28 @@ namespace MortensWay
             }
 
             return placement;
+
+        }
+
+        private Tile ChangeToKey()
+        {
+
+            bool pickRandom = true;
+            Tile tile = new Tile(TileTypes.Key, Vector2.Zero);
+            while (pickRandom)
+            {
+                int something = random.Next(0, gameObjects.Count);
+                if (gameObjects[something] is Tile)
+                {
+                    tile = gameObjects[something] as Tile;
+                    if (tile.Walkable && !tile.FencePath && (tile.Type.Equals(TileTypes.Grass) || tile.Type.Equals(TileTypes.Path)))
+                    {
+                        tile.ChangeToKey();
+                        pickRandom = false;
+                    }
+                }
+            }
+            return tile;
 
         }
 

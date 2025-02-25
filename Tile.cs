@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace MortensWay
         private HashSet<Edge> fakeEdges = new HashSet<Edge>();
         private HashSet<Edge> realEdges;
         private Monster monster;
+        private Enum originalType;
+        private Texture2D originalTexture;
 
         public HashSet<Edge> Edges { get => edges; }
         public bool Walkable
@@ -67,6 +70,7 @@ namespace MortensWay
                 case TileTypes.FencePath:
                     sprite = GameWorld.sprites[TileTypes.Path];
                     monster = new Monster(Monstre.Goose, spawnPos);
+                    fencePath = true;
                     break;
                 default:
                     break;
@@ -104,6 +108,19 @@ namespace MortensWay
 
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (type.Equals(TileTypes.Portal))
+                spriteBatch.Draw(GameWorld.sprites[TileTypes.Grass], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
+            else if(type.Equals(TileTypes.TowerKey))
+                spriteBatch.Draw(GameWorld.sprites[TileTypes.Grass], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
+            else if (type.Equals(TileTypes.TowerPortion))
+                spriteBatch.Draw(GameWorld.sprites[TileTypes.Path], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
+            else if (type.Equals(TileTypes.Key))
+                spriteBatch.Draw(originalTexture, position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
+        }
+
         /// <summary>
         /// Self-explanatory
         /// </summary>
@@ -139,17 +156,33 @@ namespace MortensWay
             }
             else if (type is TileTypes.Grass)
             {
-                this.layer = 0f;
+                this.layer = 0.1f;
             }
+#if DEBUG
             else if (type is TileTypes.FencePath)
             {
                 this.color = Color.Red; //Only to test
             }
+#endif
             else if (type is TileTypes.Key)
             {
                 this.layer = 1f;
             }
 
+        }
+
+        public void ChangeToKey()
+        {
+            originalTexture = sprite;
+            originalType = type;
+            type = TileTypes.Key;
+            sprite = GameWorld.sprites[type];
+        }
+
+        public void ChangeBackFromKey()
+        {
+            sprite = originalTexture;
+            type = originalType;
         }
 
     }
