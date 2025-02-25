@@ -33,11 +33,11 @@ namespace MortensWay
                 {
                     return edge.To;
                 }
-                foreach (Edge v in edge.To.Edges)
+                foreach (Edge e in edge.To.Edges)
                 {
-                    if (!v.To.Discovered)
+                    if (!e.To.Discovered)
                     {
-                        stack.Enqueue(v);
+                        stack.Enqueue(e);
                     }
                 }
             }
