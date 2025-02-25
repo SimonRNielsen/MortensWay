@@ -156,7 +156,7 @@ namespace MortensWay
             gameObjects.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
             gameObjects.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
 
-            #region
+            #endregion
 
 
             keyboard.CloseGame += ExitGame;
