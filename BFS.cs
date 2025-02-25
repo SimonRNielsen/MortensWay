@@ -18,16 +18,11 @@ namespace MortensWay
 
             while (stack.Count > 0)
             {
-                if(stack.Count > 10000000)
-                {
-                    return null;
-                }
                 Edge edge = stack.Dequeue();
                 if (!edge.To.Discovered)
                 {
                     edge.To.Discovered = true;
                     edge.To.Parent = edge.From;
-                    //Console.WriteLine("Node visited: " + edge.To.Type);
                 }
                 if (edge.To == endNode)
                 {
