@@ -33,7 +33,7 @@ namespace MortensWay
         public static Dictionary<Enum, Song> music = new Dictionary<Enum, Song>();
         public static SpriteFont gameFont;
         public static readonly object syncGameObjects = new object();
-        public static Morten playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
+        public Morten playerMorten;
 
         #endregion
         #endregion
@@ -78,6 +78,8 @@ namespace MortensWay
             AddContent = Content;
             mousePointer = new MousePointer<Enum>(LogicItems.MousePointer, ref gameObjects, false);
 
+            //Adding Morten instants
+            playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
             gameObjects.Add(playerMorten);
 
             #region gamemap
