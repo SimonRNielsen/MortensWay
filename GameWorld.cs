@@ -194,6 +194,17 @@ namespace MortensWay
             }
             newGameObjects.Clear();
 
+#if DEBUG
+
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+                foreach (GameObject<Enum> entry in gameObjects)
+                {
+                    if (entry is Tile && (entry as Tile).FencePath)
+                        (entry as Tile).Walkable = false;
+                }
+
+#endif
+
             base.Update(gameTime);
 
         }

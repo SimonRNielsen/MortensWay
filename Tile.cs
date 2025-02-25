@@ -22,7 +22,16 @@ namespace MortensWay
         private Enum originalType;
         private Texture2D originalTexture;
 
-        public HashSet<Edge> Edges { get => edges; }
+        public HashSet<Edge> Edges
+        {
+            get
+            {
+                if (walkable)
+                    return edges;
+                else 
+                    return fakeEdges;
+            }
+        }
         public bool Walkable
         {
             get => walkable;
@@ -45,12 +54,12 @@ namespace MortensWay
                                 removeEdges.Add(f);
                             }
                         }
-                        if(removeEdges.Count > 0) 
+                        if (removeEdges.Count > 0)
                         {
-                        foreach (Edge remove in removeEdges) //All removeEdges are removed from the tile he Tile that leads to this tile
+                            foreach (Edge remove in removeEdges) //All removeEdges are removed from the tile he Tile that leads to this tile
                             {
-                            e.To.edges.Remove(remove);
-                        }
+                                e.To.edges.Remove(remove);
+                            }
                         }
                     }
                     edges = fakeEdges; //Evt. fjerne reference til denne edge fra andre via metode? -> Se ovenfor
@@ -113,7 +122,7 @@ namespace MortensWay
             base.Draw(spriteBatch);
             if (type.Equals(TileTypes.Portal))
                 spriteBatch.Draw(GameWorld.sprites[TileTypes.Grass], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
-            else if(type.Equals(TileTypes.TowerKey))
+            else if (type.Equals(TileTypes.TowerKey))
                 spriteBatch.Draw(GameWorld.sprites[TileTypes.Grass], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
             else if (type.Equals(TileTypes.TowerPortion))
                 spriteBatch.Draw(GameWorld.sprites[TileTypes.Path], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
