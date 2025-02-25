@@ -33,6 +33,7 @@ namespace MortensWay
         public static Dictionary<Enum, Song> music = new Dictionary<Enum, Song>();
         public static SpriteFont gameFont;
         public static readonly object syncGameObjects = new object();
+        public static Morten playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
 
         #endregion
         #endregion
@@ -77,6 +78,8 @@ namespace MortensWay
             AddContent = Content;
             mousePointer = new MousePointer<Enum>(LogicItems.MousePointer, ref gameObjects, false);
 
+            gameObjects.Add(playerMorten);
+
             #region gamemap
             //grass
             for (int j = 0; j < 15; j++)
@@ -86,9 +89,9 @@ namespace MortensWay
                     TileTypes tile;
                     switch (i)
                     {
-                        case 1 when j > 5: //Test
-                            tile = TileTypes.Fence;
-                            break;
+                        //case 1 when j > 5: //Test
+                        //    tile = TileTypes.Fence;
+                        //    break;
                         default:
                             tile = TileTypes.Grass;
                             break;
