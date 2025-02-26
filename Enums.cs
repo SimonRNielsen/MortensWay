@@ -32,7 +32,7 @@
     public enum MortensEnum
     {
 
-        Bishop
+        Bishop = 11 //Set to 11, toavoid confusion when using gameObjects.Find on enums. 
 
     }
 
