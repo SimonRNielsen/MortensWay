@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 using System.Diagnostics;
+//using SharpDX.Direct3D9;
 
 namespace MortensWay
 {
@@ -44,19 +45,21 @@ namespace MortensWay
 
 
         //Irene tester Astar
-        private static GameWorld instance;
+        Dictionary<Vector2, Tile> cells;
 
-        public static GameWorld Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new GameWorld();
-                }
-                return instance;
-            }
-        }
+        //private static GameWorld instance;
+
+        //public static GameWorld Instance
+        //{
+        //    get
+        //    {
+        //        if (instance == null)
+        //        {
+        //            instance = new GameWorld();
+        //        }
+        //        return instance;
+        //    }
+        //}
 
         #endregion
         #endregion
@@ -105,36 +108,6 @@ namespace MortensWay
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
             gameObjects.Add(playerMorten);
 
-            ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
-            //Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
-
-            //// Eksempel: Tilføj tiles til cells
-            //for (int x = 0; x < 10; x++)
-            //{
-            //    for (int y = 0; y < 10; y++)
-            //    {
-            //        Vector2 position = new Vector2(x, y);
-            //        Tile tile = new Tile(TileTypes.Grass, position);
-            //        cells.Add(position, tile);
-            //    }
-            //}
-
-            //AStar astar = new AStar(cells);
-            //List<Tile> path = astar.FindPath(new Vector2(0, 0), new Vector2(5, 5));
-
-            //if (path != null)
-            //{
-            //    Console.WriteLine("Path found");
-            //    foreach (Tile tile in path)
-            //    {
-            //        Console.WriteLine($"({tile.Position.X}, {tile.Position.Y})");
-            //    }
-            //}
-            //else 
-            //{
-            //    Console.WriteLine("No path found.");
-            //}
-            ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
 
             #region gamemap
             //grass
@@ -298,16 +271,21 @@ namespace MortensWay
 
             }
 
-            //Test af Astar
-            Tile startPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-            Tile endPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
-            AStar.FindPath(startPoint.Position, endPoint.Position);
-            List<Tile> pathAstarTest = AStar.FindPath(startPoint, endPoint);
-            foreach (Tile q in pathAstarTest)
-            {
-                q.Color = Color.Violet;
-
-            }
+            ////Test af Astar
+            //Tile startPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
+            //Tile endPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+            ////AStar.FindPath(startPoint.Position, endPoint.Position);
+            //List<Tile> pathAstarTest = AStar.FindPath(startPoint.Position, endPoint.Position);
+            //foreach (Tile q in pathAstarTest)
+            //{
+            //    q.Color = Color.DarkViolet;
+            //}
+            //AStar astar = new AStar(cells);
+            //var path = astar.FindPath(startPoint.Position, endPoint.Position);
+            //foreach (var VARIABLE in path)
+            //{
+            //    VARIABLE.Color = Color.Violet;
+            //}
         }
 
 
