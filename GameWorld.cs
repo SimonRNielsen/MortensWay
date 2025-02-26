@@ -153,6 +153,7 @@ namespace MortensWay
             {
                 for (int i = 0; i < 15; i++)
                 {
+                    bool fencePath = false;
                     TileTypes tile;
                     switch (i)
                     {
@@ -169,6 +170,7 @@ namespace MortensWay
                             tile = TileTypes.Fence;
                             break;
                         case > 2 when i < 12 && j == 13:
+                            fencePath = true;
                             if (i == 4 || i == 7 || i == 10)
                                 tile = TileTypes.FencePath;
                             else
@@ -199,7 +201,7 @@ namespace MortensWay
                             tile = TileTypes.Grass;
                             break;
                     }
-                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
+                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j), fencePath);
                     gameObjects.Add(t);
                     grid.Add(t);
                 }
