@@ -211,8 +211,6 @@ namespace MortensWay
 
             //}
 
-           
-
             aStar = new AStar(cells);
             List<Tile> path = AStar.FindPath(keyOne.Position, keyTwo.Position);
             foreach (var VARIABLE in path)
