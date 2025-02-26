@@ -191,21 +191,13 @@ namespace MortensWay
 
             //}
 
-            ////Test af Astar
-            //Tile startPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-            //Tile endPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
-            ////AStar.FindPath(startPoint.Position, endPoint.Position);
-            //List<Tile> pathAstarTest = AStar.FindPath(startPoint.Position, endPoint.Position);
-            //foreach (Tile q in pathAstarTest)
-            //{
-            //    q.Color = Color.DarkViolet;
-            //}
+           
 
             aStar = new AStar(cells);
             List<Tile> path = AStar.FindPath(keyOne.Position, keyTwo.Position);
             foreach (var VARIABLE in path)
             {
-                VARIABLE.Color = Color.Violet;
+                VARIABLE.Color = Color.Pink;
             }
         }
 
