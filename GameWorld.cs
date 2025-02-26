@@ -49,9 +49,6 @@ namespace MortensWay
         public static Tile keyOne;
         public static Tile keyTwo;
 
-        //private static List<T> tileObjects = new List<Tile>();
-
-
         //Irene tester Astar
         public static Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
 
