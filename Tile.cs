@@ -18,7 +18,6 @@ namespace MortensWay
         private bool fencePath = false;
         private HashSet<Edge> edges = new HashSet<Edge>();
         private HashSet<Edge> fakeEdges = new HashSet<Edge>();
-        private HashSet<Edge> realEdges;
         private Monster monster;
         private bool discovered = false;
         private Tile parent;
@@ -29,10 +28,6 @@ namespace MortensWay
         public int H { get; set; }
         public int F => G + H;
 
-
-
-
-        //public HashSet<Edge> Edges { get => edges; }
         public HashSet<Edge> Edges
         {
             get
@@ -57,25 +52,6 @@ namespace MortensWay
                     Thread t = new Thread(SpawnMonster);
                     t.IsBackground = true;
                     t.Start();
-                    //HashSet<Edge> removeEdges = new HashSet<Edge>(); //Hashset for edges that should be removed
-                    //foreach (Edge e in edges) //Looks at all edges going from this tile
-                    //{
-                    //    foreach (Edge f in e.To.edges) //Looks at all the edges from the Tile that this tile leads to
-                    //    {
-                    //        if (f.To == this) //If the edge leads to this tile, the edge is added to a remove list
-                    //        {
-                    //            removeEdges.Add(f);
-                    //        }
-                    //    }
-                    //    if (removeEdges.Count > 0)
-                    //    {
-                    //        foreach (Edge remove in removeEdges) //All removeEdges are removed from the tile he Tile that leads to this tile
-                    //        {
-                    //            e.To.edges.Remove(remove);
-                    //        }
-                    //    }
-                    //}
-                    //edges = fakeEdges; //Evt. fjerne reference til denne edge fra andre via metode? -> Se ovenfor
                 }
             }
         }
@@ -127,8 +103,6 @@ namespace MortensWay
                     }
                 }
 
-            //realEdges = edges; //Måske udkommenteres?
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -166,7 +140,6 @@ namespace MortensWay
             {
                 monster.IsAlive = false;
                 walkable = true;
-                //edges = realEdges;
             }
 
             G = 0;
