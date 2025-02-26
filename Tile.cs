@@ -32,7 +32,7 @@ namespace MortensWay
 
 
 
-        public HashSet<Edge> Edges { get => edges; }
+        //public HashSet<Edge> Edges { get => edges; }
         public HashSet<Edge> Edges
         {
             get

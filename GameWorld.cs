@@ -106,34 +106,34 @@ namespace MortensWay
             gameObjects.Add(playerMorten);
 
             ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
-            Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
+            //Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
 
-            // Eksempel: Tilføj tiles til cells
-            for (int x = 0; x < 10; x++)
-            {
-                for (int y = 0; y < 10; y++)
-                {
-                    Vector2 position = new Vector2(x, y);
-                    Tile tile = new Tile(TileTypes.Grass, position);
-                    cells.Add(position, tile);
-                }
-            }
+            //// Eksempel: Tilføj tiles til cells
+            //for (int x = 0; x < 10; x++)
+            //{
+            //    for (int y = 0; y < 10; y++)
+            //    {
+            //        Vector2 position = new Vector2(x, y);
+            //        Tile tile = new Tile(TileTypes.Grass, position);
+            //        cells.Add(position, tile);
+            //    }
+            //}
 
-            AStar astar = new AStar(cells);
-            List<Tile> path = astar.FindPath(new Vector2(0, 0), new Vector2(5, 5));
+            //AStar astar = new AStar(cells);
+            //List<Tile> path = astar.FindPath(new Vector2(0, 0), new Vector2(5, 5));
 
-            if (path != null)
-            {
-                Console.WriteLine("Path found");
-                foreach (Tile tile in path)
-                {
-                    Console.WriteLine($"({tile.Position.X}, {tile.Position.Y})");
-                }
-            }
-            else 
-            {
-                Console.WriteLine("No path found.");
-            }
+            //if (path != null)
+            //{
+            //    Console.WriteLine("Path found");
+            //    foreach (Tile tile in path)
+            //    {
+            //        Console.WriteLine($"({tile.Position.X}, {tile.Position.Y})");
+            //    }
+            //}
+            //else 
+            //{
+            //    Console.WriteLine("No path found.");
+            //}
             ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
 
             #region gamemap
@@ -295,6 +295,17 @@ namespace MortensWay
             foreach (Tile t in pathTest)
             {
                 t.Color = Color.LightBlue;
+
+            }
+
+            //Test af Astar
+            Tile startPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
+            Tile endPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+            AStar.FindPath(startPoint.Position, endPoint.Position);
+            List<Tile> pathAstarTest = AStar.FindPath(startPoint, endPoint);
+            foreach (Tile q in pathAstarTest)
+            {
+                q.Color = Color.Violet;
 
             }
         }
