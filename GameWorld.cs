@@ -35,6 +35,7 @@ namespace MortensWay
         public static SpriteFont gameFont;
         public static readonly object syncGameObjects = new object();
         public Morten playerMorten;
+        private static bool arrived = true;
 
         public Random random = new Random();
         public static Tile keyOne;
@@ -51,6 +52,8 @@ namespace MortensWay
         /// Handles secure closing of seperate threads
         /// </summary>
         public static bool GameRunning { get => gameRunning; }
+
+        public static bool Arrived { get => arrived; set => arrived = value; }
 
         /// <summary>
         /// Enables/Disables collision-textures
@@ -160,7 +163,7 @@ namespace MortensWay
             #endregion
 
             keyboard.CloseGame += ExitGame;
-
+            
             //Test of BFS: 
             Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
             Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
@@ -215,6 +218,25 @@ namespace MortensWay
                 }
 
 #endif
+
+            if (arrived)
+            {
+
+                Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
+                Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+                BFS.BFSMethod(startNode, endNode);
+                List<Tile> pathTest = BFS.FindPath(endNode, startNode);
+                foreach (Tile tile in pathTest)
+                {
+                    tile.Color = Color.LightBlue;
+
+                }
+                Thread t = new Thread(() => playerMorten.FollowPath(pathTest));
+                t.IsBackground = true;
+                t.Start();
+                arrived = false;
+
+            }
 
             base.Update(gameTime);
 

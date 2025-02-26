@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MortensWay
 {
@@ -19,6 +20,23 @@ namespace MortensWay
         public override void LoadContent(ContentManager content)
         {
             throw new NotImplementedException();
+        }
+
+        public void FollowPath(List<Tile> path)
+        {
+
+            foreach (Tile entry in path)
+            {
+                position = entry.Position;
+                if (entry.FencePath)
+                    entry.Walkable = false;
+                else if (entry.Type.Equals(TileTypes.Key))
+                    entry.ChangeBackFromKey();
+                Thread.Sleep(750);
+            }
+
+            GameWorld.Arrived = true;
+
         }
     }
 }
