@@ -48,7 +48,7 @@ namespace MortensWay
                     Thread t = new Thread(SpawnMonster);
                     t.IsBackground = true;
                     t.Start();
-                    HashSet<Edge> removeEdges = new HashSet<Edge>(); //Hashset for edges that should be removed
+                    //HashSet<Edge> removeEdges = new HashSet<Edge>(); //Hashset for edges that should be removed
                     //foreach (Edge e in edges) //Looks at all edges going from this tile
                     //{
                     //    foreach (Edge f in e.To.edges) //Looks at all the edges from the Tile that this tile leads to
