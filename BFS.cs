@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace MortensWay
 {
@@ -88,6 +89,17 @@ namespace MortensWay
             return pathOfNodes;
         }
 
+
+
+
+
+
+
+        public static void StartBFS()
+        {
+            GameWorld.AlgorithmIsChosen = true ;
+            GameWorld.ChosenAlgorithm = AlgorithmType.BFS;
+        }
 
     }
 

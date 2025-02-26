@@ -19,6 +19,8 @@ namespace MortensWay
 
         private static bool gameRunning = true;
         private static bool debugMode = false;
+        private static bool algorithmIsChosen = false;
+        private static AlgorithmType chosenAlgorithm; 
 
         #region Collections, Assets, Objects & Eventhandlers
 
@@ -27,7 +29,7 @@ namespace MortensWay
         private static ContentManager AddContent;
         internal static MousePointer<Enum> mousePointer;
         internal static KeyboardInput keyboard = new KeyboardInput();
-        private static List<GameObject<Enum>> gameObjects = new List<GameObject<Enum>>();
+        public static List<GameObject<Enum>> gameObjects = new List<GameObject<Enum>>();
         private static List<GameObject<Enum>> newGameObjects = new List<GameObject<Enum>>();
         public static HashSet<Tile> grid = new HashSet<Tile>();
         public static Dictionary<Enum, Texture2D> sprites = new Dictionary<Enum, Texture2D>();
@@ -38,6 +40,9 @@ namespace MortensWay
         public static readonly object syncGameObjects = new object();
         public Morten playerMorten;
         private static bool arrived = true;
+        private int index;
+        private Tile[] destinations = new Tile[6];
+        private Vector2 startPosition;
         private static AStar aStar;
 
         public Random random = new Random();
@@ -73,7 +78,12 @@ namespace MortensWay
         /// </summary>
         public static bool GameRunning { get => gameRunning; }
 
+        public static int TilesMoved = 0;
         public static bool Arrived { get => arrived; set => arrived = value; }
+
+        public static bool AlgorithmIsChosen { get => algorithmIsChosen; set => algorithmIsChosen = value; }
+
+        public static AlgorithmType ChosenAlgorithm { get => chosenAlgorithm; set => chosenAlgorithm = value; }
 
         /// <summary>
         /// Enables/Disables collision-textures
@@ -111,6 +121,7 @@ namespace MortensWay
 
             //Adding Morten instants
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
+            startPosition = playerMorten.Position;
             gameObjects.Add(playerMorten);
 
 
@@ -136,7 +147,10 @@ namespace MortensWay
                             tile = TileTypes.Fence;
                             break;
                         case > 2 when i < 12 && j == 13:
-                            tile = TileTypes.FencePath;
+                            if (i == 4 || i == 7 || i == 10)
+                                tile = TileTypes.FencePath;
+                            else
+                                tile = TileTypes.Path;
                             break;
                         case 1 when j == 13:
                         case 2 when j > 10 && j < 14:
@@ -175,7 +189,13 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-
+            Tile start = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            destinations[0] = start;
+            destinations[1] = keyOne;
+            destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
+            destinations[3] = keyTwo;
+            destinations[4] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerKey);
+            destinations[5] = start;
             #endregion
 
             keyboard.CloseGame += ExitGame;
@@ -244,24 +264,30 @@ namespace MortensWay
 
 #endif
 
-            if (arrived)
+            if (algorithmIsChosen && arrived && (index < destinations.Length - 1))
             {
-
-                Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-                Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+                foreach (Tile tile in grid)
+                {
+                    tile.Discovered = false;
+                    tile.Parent = default;
+                    tile.Color = Color.White;
+                }
+                Tile startNode = destinations[index];
+                Tile endNode = destinations[index + 1];
+                index++;
                 BFS.BFSMethod(startNode, endNode);
                 List<Tile> pathTest = BFS.FindPath(endNode, startNode);
                 foreach (Tile tile in pathTest)
                 {
                     tile.Color = Color.LightBlue;
-
                 }
                 Thread t = new Thread(() => playerMorten.FollowPath(pathTest));
                 t.IsBackground = true;
                 t.Start();
                 arrived = false;
-
             }
+            else if (index == destinations.Length - 1 && arrived)
+                Reset();
 
             base.Update(gameTime);
 
@@ -290,7 +316,7 @@ namespace MortensWay
                         DrawCollisionBox(gameObject);
                     }
             }
-
+            _spriteBatch.DrawString(gameFont, "Tiles moved: " + TilesMoved.ToString(), new Vector2(10, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -452,6 +478,22 @@ namespace MortensWay
             Debug.WriteLine("Edges: " + edges);
             Debug.WriteLine("Edge weight total: " + edgeweight);
             Debug.WriteLine("Average edge weight: " + averageWeight);
+            Debug.WriteLine("Morten has moved {0} tiles", TilesMoved);
+        }
+
+        private void Reset()
+        {
+            foreach (Tile entry in grid)
+            {
+                entry.SetOriginalState();
+            }
+            playerMorten.Position = startPosition;
+            keyOne = ChangeToKey();
+            keyTwo = ChangeToKey();
+            destinations[1] = keyOne;
+            destinations[3] = keyTwo;
+            index = 0;
+            AlgorithmIsChosen = false; 
         }
 
         #endregion
