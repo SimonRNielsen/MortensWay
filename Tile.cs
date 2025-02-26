@@ -24,7 +24,6 @@ namespace MortensWay
         public int G { get; set; }
         public int H { get; set; }
         public int F => G + H;
-        public Tile Parent { get; set; }
 
 
 
