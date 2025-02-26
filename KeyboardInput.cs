@@ -41,7 +41,7 @@ namespace MortensWay
             else if (GameWorld.DebugMode)
                 GameWorld.DebugMode = false;
 
-            if (input.IsKeyDown(Keys.B))
+            if (input.IsKeyDown(Keys.B) && !GameWorld.AlgorithmIsChosen)
             {
                 BFS.StartBFS();
             }
