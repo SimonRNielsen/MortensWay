@@ -162,8 +162,8 @@ namespace MortensWay
             keyboard.CloseGame += ExitGame;
 
             //Test of BFS: 
-            Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+            Tile startNode = (Tile)(gameObjects.Find(x => x.Position == playerMorten.Position && x != playerMorten));
+            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.Key));
             BFS.BFSMethod(startNode, endNode);
             List<Tile> pathTest = BFS.FindPath(endNode, startNode);
             foreach (Tile t in pathTest)
