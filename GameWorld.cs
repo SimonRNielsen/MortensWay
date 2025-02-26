@@ -18,6 +18,7 @@ namespace MortensWay
         private static bool gameRunning = true;
         private static bool debugMode = false;
         private static bool algorithmIsChosen = false;
+        private static AlgorithmType chosenAlgorithm; 
 
         #region Collections, Assets, Objects & Eventhandlers
 
@@ -76,6 +77,8 @@ namespace MortensWay
         public static bool Arrived { get => arrived; set => arrived = value; }
 
         public static bool AlgorithmIsChosen { get => algorithmIsChosen; set => algorithmIsChosen = value; }
+
+        public static AlgorithmType ChosenAlgorithm { get => chosenAlgorithm; set => chosenAlgorithm = value; }
 
         /// <summary>
         /// Enables/Disables collision-textures

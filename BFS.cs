@@ -98,6 +98,7 @@ namespace MortensWay
         public static void StartBFS()
         {
             GameWorld.AlgorithmIsChosen = true ;
+            GameWorld.ChosenAlgorithm = AlgorithmType.BFS;
         }
 
     }
