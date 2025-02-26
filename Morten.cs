@@ -30,7 +30,7 @@ namespace MortensWay
                 position = entry.Position;
                 if (entry.FencePath)
                     entry.Walkable = false;
-                else if (entry.Type.Equals(TileTypes.Key))
+                else if (entry.Type.Equals(TileTypes.Key) && entry == path.Last())
                     entry.ChangeBackFromKey();
                 Thread.Sleep(750);
             }
