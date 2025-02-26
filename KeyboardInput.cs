@@ -45,6 +45,11 @@ namespace MortensWay
             {
                 BFS.StartBFS();
             }
+
+            if (input.IsKeyDown(Keys.A) && !GameWorld.AlgorithmIsChosen)
+            {
+                AStar.StartAStar();
+            }
         }
 
         #endregion

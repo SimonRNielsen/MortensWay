@@ -168,6 +168,11 @@ namespace MortensWay
 
             return neighbours;
         }
+        public static void StartAStar()
+        {
+            GameWorld.AlgorithmIsChosen = true;
+            GameWorld.ChosenAlgorithm = AlgorithmType.AStat;
+        }
 
     }
 

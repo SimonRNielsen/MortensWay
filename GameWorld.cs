@@ -20,7 +20,7 @@ namespace MortensWay
         private static bool gameRunning = true;
         private static bool debugMode = false;
         private static bool algorithmIsChosen = false;
-        private static AlgorithmType chosenAlgorithm; 
+        private static AlgorithmType chosenAlgorithm;
 
         #region Collections, Assets, Objects & Eventhandlers
 
@@ -210,12 +210,7 @@ namespace MortensWay
 
             //}
 
-            aStar = new AStar(cells);
-            List<Tile> path = AStar.FindPath(keyOne.Position, keyTwo.Position);
-            foreach (var VARIABLE in path)
-            {
-                VARIABLE.Color = Color.Pink;
-            }
+
         }
 
 
@@ -261,6 +256,7 @@ namespace MortensWay
 
 #endif
 
+
             if (algorithmIsChosen && arrived && (index < destinations.Length - 1))
             {
                 foreach (Tile tile in grid)
@@ -271,13 +267,27 @@ namespace MortensWay
                 }
                 Tile startNode = destinations[index];
                 Tile endNode = destinations[index + 1];
-                index++;
-                BFS.BFSMethod(startNode, endNode);
-                List<Tile> pathTest = BFS.FindPath(endNode, startNode);
-                foreach (Tile tile in pathTest)
+
+                List<Tile> pathTest = new List<Tile>();
+                if (ChosenAlgorithm == AlgorithmType.BFS)
                 {
-                    tile.Color = Color.LightBlue;
+                    BFS.BFSMethod(startNode, endNode);
+                    pathTest = BFS.FindPath(endNode, startNode);
+                    foreach (Tile tile in pathTest)
+                    {
+                        tile.Color = Color.LightBlue;
+                    }
                 }
+                else //if (ChosenAlgorithm == AlgorithmType.AStat)
+                {
+                    aStar = new AStar(cells);
+                    pathTest = AStar.FindPath(destinations[index].Position, destinations[index + 1].Position);
+                    foreach (var VARIABLE in pathTest)
+                    {
+                        VARIABLE.Color = Color.Pink;
+                    }
+                }
+                index++;
                 Thread t = new Thread(() => playerMorten.FollowPath(pathTest));
                 t.IsBackground = true;
                 t.Start();
@@ -490,7 +500,7 @@ namespace MortensWay
             destinations[1] = keyOne;
             destinations[3] = keyTwo;
             index = 0;
-            AlgorithmIsChosen = false; 
+            AlgorithmIsChosen = false;
         }
 
         #endregion
