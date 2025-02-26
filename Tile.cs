@@ -77,6 +77,27 @@ namespace MortensWay
 
             LayerType(type);
         }
+        public Tile(Enum type, Vector2 spawnPos, bool fencePath) : base(type, spawnPos)
+        {
+            switch (type)
+            {
+                case TileTypes.Stone:
+                case TileTypes.Fence:
+                    walkable = false;
+                    break;
+                case TileTypes.FencePath:
+                    sprite = GameWorld.sprites[TileTypes.Path];
+                    monster = new Monster(Monstre.Goose, spawnPos);
+                    fencePath = true;
+                    break;
+                default:
+                    break;
+            }
+
+            this.fencePath = fencePath;
+
+            LayerType(type);
+        }
 
         public override void LoadContent(ContentManager content)
         {
