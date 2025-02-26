@@ -188,7 +188,7 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-            Tile start = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            Tile start = (Tile)gameObjects.Find(x => x.Position == startPosition && x != playerMorten);
             destinations[0] = start;
             destinations[1] = keyOne;
             destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
@@ -324,6 +324,8 @@ namespace MortensWay
                     }
             }
             _spriteBatch.DrawString(gameFont, "Tiles moved: " + TilesMoved.ToString(), new Vector2(10, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
+            _spriteBatch.DrawString(gameFont, "Press B for BFS \n" + "Press A for A* \n" + "Press R for restart \n" + "Press esc for exit", new Vector2(_graphics.PreferredBackBufferWidth - 280, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
