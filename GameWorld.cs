@@ -35,6 +35,21 @@ namespace MortensWay
         public static readonly object syncGameObjects = new object();
         public Morten playerMorten;
 
+        //Irene tester Astar
+        private static GameWorld instance;
+
+        public static GameWorld Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameWorld();
+                }
+                return instance;
+            }
+        }
+
         #endregion
         #endregion
         #region Properties
@@ -82,27 +97,58 @@ namespace MortensWay
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
             gameObjects.Add(playerMorten);
 
+            ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
+            Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
+
+            // Eksempel: Tilføj tiles til cells
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    Vector2 position = new Vector2(x, y);
+                    Tile tile = new Tile(TileTypes.Grass, position);
+                    cells.Add(position, tile);
+                }
+            }
+
+            AStar astar = new AStar(cells);
+            List<Tile> path = astar.FindPath(new Vector2(0, 0), new Vector2(5, 5));
+
+            if (path != null)
+            {
+                Console.WriteLine("Path found");
+                foreach (Tile tile in path)
+                {
+                    Console.WriteLine($"({tile.Position.X}, {tile.Position.Y})");
+                }
+            }
+            else 
+            {
+                Console.WriteLine("No path found.");
+            }
+            ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
+
             #region gamemap
             //grass
             for (int j = 0; j < 15; j++)
-            {
-                for (int i = 0; i < 15; i++)
                 {
-                    TileTypes tile;
-                    switch (i)
+                    for (int i = 0; i < 15; i++)
                     {
-                        //case 1 when j > 5: //Test
-                        //    tile = TileTypes.Fence;
-                        //    break;
-                        default:
-                            tile = TileTypes.Grass;
-                            break;
+                        TileTypes tile;
+                        switch (i)
+                        {
+                            //case 1 when j > 5: //Test
+                            //    tile = TileTypes.Fence;
+                            //    break;
+                            default:
+                                tile = TileTypes.Grass;
+                                break;
+                        }
+                        Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
+                        gameObjects.Add(t);
+                        grid.Add(t);
                     }
-                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
-                    gameObjects.Add(t);
-                    grid.Add(t);
                 }
-            }
             foreach (Tile entry in grid)
             {
                 entry.CreateEdges(grid);

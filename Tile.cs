@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using SharpDX.Direct3D9;
 
 namespace MortensWay
 {
@@ -16,6 +17,13 @@ namespace MortensWay
         private HashSet<Edge> fakeEdges = new HashSet<Edge>();
         private HashSet<Edge> realEdges;
         private Monster monster;
+
+        public int G { get; set; }
+        public int H { get; set; }
+        public int F => G + H;
+        public Tile Parent { get; set; }
+
+
 
 
         public HashSet<Edge> Edges { get => edges; }
@@ -35,7 +43,7 @@ namespace MortensWay
                 }
             }
         }
-
+        
         public Tile(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
             switch (type)
@@ -107,7 +115,11 @@ namespace MortensWay
                 monster.IsAlive = false;
                 walkable = true;
                 edges = realEdges;
+
             }
+
+            G = 0;
+            H = 0;
 
         }
 
@@ -127,6 +139,7 @@ namespace MortensWay
             }
 
         }
+
 
     }
 }
