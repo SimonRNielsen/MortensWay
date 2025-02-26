@@ -34,7 +34,6 @@ namespace MortensWay
                     return fakeEdges;
             }
         }
-        public HashSet<Edge> Edges { get => edges; }
         public bool Discovered { get => discovered; set => discovered = value; }
         public Tile Parent { get => parent; set => parent = value; }
         public bool Walkable

@@ -13,7 +13,7 @@ namespace MortensWay
         protected T type;
         protected Texture2D sprite;
         protected Texture2D[] sprites;
-        private Color color = Color.White;
+        protected Color color = Color.White;
         protected Vector2 position;
         protected Vector2 velocity;
         protected SpriteEffects[] spriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
