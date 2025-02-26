@@ -213,7 +213,7 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-            Tile start = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            Tile start = (Tile)gameObjects.Find(x => x.Position == startPosition && x != playerMorten);
             destinations[0] = start;
             destinations[1] = keyOne;
             destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
