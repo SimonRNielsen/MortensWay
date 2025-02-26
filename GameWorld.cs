@@ -161,8 +161,18 @@ namespace MortensWay
 
             keyboard.CloseGame += ExitGame;
 
+            //Test of BFS: 
+            Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
+            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+            BFS.BFSMethod(startNode, endNode);
+            List<Tile> pathTest = BFS.FindPath(endNode, startNode);
+            foreach (Tile t in pathTest)
+            {
+                t.Color = Color.LightBlue;
 
+            }
         }
+
 
 
         protected override void LoadContent()
@@ -320,27 +330,35 @@ namespace MortensWay
             while (finding)
             {
                 //Random generation the x and y position
-                int rndX = random.Next(0, 15);
-                int rndY = random.Next(0, 15);
+                int rndX = random.Next(0, 29);
+                int rndY = random.Next(0, 29);
 
                 //The random generatet placement
-                placement = new Vector2(rndX * 64, rndY * 64);
+                placement = new Vector2(rndX * 32, rndY * 32);
 
                 //Tjecking if the position is walkable
                 foreach (Tile item in grid)
                 {
-                    if (item.Position == placement && item.Walkable == true && !item.FencePath)
+                    if (item.Position == placement)
                     {
-                        if (!item.Type.Equals(TileTypes.Portal) || !item.Type.Equals(TileTypes.TowerKey) || !item.Type.Equals(TileTypes.TowerPortion) || !item.Type.Equals(TileTypes.Fence) || !item.Type.Equals(TileTypes.FencePath) || !item.Type.Equals(TileTypes.Key) || !item.Type.Equals(TileTypes.Stone))
+                        if (item.Walkable == false || item.Type.Equals(TileTypes.FencePath))
                         {
+                            break;
+                        }
+                        else if (item.Type.Equals(TileTypes.Portal) || item.Type.Equals(TileTypes.TowerKey) || item.Type.Equals(TileTypes.TowerPortion) || item.Type.Equals(TileTypes.Key))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"{item.Type} {item.Position} {item.Walkable}");
                             //If the position of the tile is walkable then change "finding" to false to break the while loop
                             finding = false;
+                            return placement;
                         }
                     }
-                    continue;
                 }
 
-                finding = false;
             }
 
             return placement;
@@ -368,7 +386,6 @@ namespace MortensWay
             return tile;
 
         }
-
         private void TnEDebug()
         {
             int tiles = 0;
@@ -389,7 +406,6 @@ namespace MortensWay
             Debug.WriteLine("Edge weight total: " + edgeweight);
             Debug.WriteLine("Average edge weight: " + averageWeight);
         }
-
 
         #endregion
     }

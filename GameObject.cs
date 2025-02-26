@@ -13,12 +13,12 @@ namespace MortensWay
         protected T type;
         protected Texture2D sprite;
         protected Texture2D[] sprites;
-        protected Color color = Color.White;
+        private Color color = Color.White;
         protected Vector2 position;
         protected Vector2 velocity;
         protected SpriteEffects[] spriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected float fps = 20;
-        protected float layer = 0.5f;
+        protected float layer = 0.3f;
         protected float scale = 1;
         protected float timeElapsed;
         protected float speed;
@@ -132,6 +132,7 @@ namespace MortensWay
         /// Property to compare layers
         /// </summary>
         public virtual float Layer { get => layer; }
+        public Color Color { get => color; set => color = value; }
 
         #endregion
 
@@ -215,7 +216,7 @@ namespace MortensWay
         {
 
             if (sprite != null)
-                spriteBatch.Draw(sprite, position, null, color, rotation, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer);
+                spriteBatch.Draw(sprite, position, null, Color, rotation, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer);
 
         }
 

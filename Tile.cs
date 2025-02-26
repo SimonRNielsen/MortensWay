@@ -19,6 +19,8 @@ namespace MortensWay
         private HashSet<Edge> fakeEdges = new HashSet<Edge>();
         private HashSet<Edge> realEdges;
         private Monster monster;
+        private bool discovered = false;
+        private Tile parent;
         private Enum originalType;
         private Texture2D originalTexture;
 
@@ -32,6 +34,9 @@ namespace MortensWay
                     return fakeEdges;
             }
         }
+        public HashSet<Edge> Edges { get => edges; }
+        public bool Discovered { get => discovered; set => discovered = value; }
+        public Tile Parent { get => parent; set => parent = value; }
         public bool Walkable
         {
             get => walkable;
@@ -67,6 +72,7 @@ namespace MortensWay
             }
         }
         public bool FencePath { get => fencePath; }
+
 
         public Tile(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
@@ -159,7 +165,7 @@ namespace MortensWay
 
         public void LayerType(Enum type)
         {
-            if (type is TileTypes.Fence || type is TileTypes.TowerPortion || type is TileTypes.TowerKey)
+            if (type is TileTypes.Fence)
             {
                 this.layer = 0.90f;
             }
@@ -170,7 +176,7 @@ namespace MortensWay
 #if DEBUG
             else if (type is TileTypes.FencePath)
             {
-                this.color = Color.Red; //Only to test
+                this.Color = Color.Red; //Only to test
             }
 #endif
             else if (type is TileTypes.Key)
