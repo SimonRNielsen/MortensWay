@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace MortensWay
 {
@@ -85,6 +86,23 @@ namespace MortensWay
             return pathOfNodes;
         }
 
+
+
+
+
+
+
+        public static void StartBFS()
+        {
+            Tile startNode = (Tile)(GameWorld.gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
+            Tile endNode = (Tile)(GameWorld.gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+            BFS.BFSMethod(startNode, endNode);
+            List<Tile> pathTest = BFS.FindPath(endNode, startNode);
+            foreach (Tile item in pathTest)
+            {
+                item.Color = Color.LightBlue;
+            }
+        }
 
     }
 

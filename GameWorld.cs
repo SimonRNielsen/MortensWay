@@ -25,7 +25,7 @@ namespace MortensWay
         private static ContentManager AddContent;
         internal static MousePointer<Enum> mousePointer;
         internal static KeyboardInput keyboard = new KeyboardInput();
-        private static List<GameObject<Enum>> gameObjects = new List<GameObject<Enum>>();
+        public static List<GameObject<Enum>> gameObjects = new List<GameObject<Enum>>();
         private static List<GameObject<Enum>> newGameObjects = new List<GameObject<Enum>>();
         public static HashSet<Tile> grid = new HashSet<Tile>();
         public static Dictionary<Enum, Texture2D> sprites = new Dictionary<Enum, Texture2D>();
@@ -235,15 +235,15 @@ namespace MortensWay
             keyboard.CloseGame += ExitGame;
 
             //Test of BFS: 
-            Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
-            BFS.BFSMethod(startNode, endNode);
-            List<Tile> pathTest = BFS.FindPath(endNode, startNode);
-            foreach (Tile t in pathTest)
-            {
-                t.Color = Color.LightBlue;
+            //Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
+            //Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+            //BFS.BFSMethod(startNode, endNode);
+            //List<Tile> pathTest = BFS.FindPath(endNode, startNode);
+            //foreach (Tile t in pathTest)
+            //{
+            //    t.Color = Color.LightBlue;
 
-            }
+            //}
         }
 
 
