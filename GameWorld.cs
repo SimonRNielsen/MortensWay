@@ -38,6 +38,7 @@ namespace MortensWay
         private static bool arrived = true;
         private int index;
         private Tile[] destinations = new Tile[6];
+        private Vector2 startPosition;
 
         public Random random = new Random();
         public static Tile keyOne;
@@ -109,6 +110,7 @@ namespace MortensWay
 
             //Adding Morten instants
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
+            startPosition = playerMorten.Position;
             gameObjects.Add(playerMorten);
 
             ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
