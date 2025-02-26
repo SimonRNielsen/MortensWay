@@ -16,7 +16,7 @@ namespace MortensWay
             Queue<Tile> queue = new Queue<Tile>();
             startNode.Discovered = true;
             queue.Enqueue(startNode);
-            while(queue.Count >0)
+            while (queue.Count > 0)
             {
                 Tile currentTile = queue.Dequeue();
                 if (currentTile == endNode)
@@ -25,12 +25,15 @@ namespace MortensWay
                 }
                 foreach (Edge e in currentTile.Edges)
                 {
-                    Tile neighbor = e.To;
-                    if(!neighbor.Discovered)
+                    if (e.To != null)
                     {
-                        neighbor.Discovered = true;
-                        neighbor.Parent = currentTile;
-                        queue.Enqueue(neighbor);
+                        Tile neighbor = e.To;
+                        if (!neighbor.Discovered)
+                        {
+                            neighbor.Discovered = true;
+                            neighbor.Parent = currentTile;
+                            queue.Enqueue(neighbor);
+                        }
                     }
                 }
 
