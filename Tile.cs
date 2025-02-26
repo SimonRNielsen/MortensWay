@@ -136,13 +136,18 @@ namespace MortensWay
 
         public void LayerType(Enum type)
         {
-            if (type is TileTypes.Fence || type is TileTypes.TowerPortion || type is TileTypes.TowerKey)
+            if (type is TileTypes.Fence)
             {
                 this.layer = 0.90f;
             }
             else if (type is TileTypes.Grass)
             {
                 this.layer = 0f;
+            }
+            else if (type is TileTypes.TowerPortion || type is TileTypes.TowerKey || type is TileTypes.Portal)
+            {
+                this.layer = 0.9f;
+                this.scale = 2.2f;
             }
             else if (type is TileTypes.FencePath)
             {
