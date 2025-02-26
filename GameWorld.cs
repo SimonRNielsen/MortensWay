@@ -372,6 +372,7 @@ namespace MortensWay
 
         private void ExitGame()
         {
+            TnEDebug();
             gameRunning = false;
             Thread.Sleep(20);
             Exit();
@@ -425,7 +426,26 @@ namespace MortensWay
             return placement;
 
         }
-
+        private void TnEDebug()
+        {
+            int tiles = 0;
+            int edges = 0;
+            int edgeweight = 0;
+            foreach (Tile tile in grid)
+            {
+                tiles++;
+                foreach (Edge edge in tile.Edges)
+                {
+                    edges++;
+                    edgeweight += edge.Weight;
+                }
+            }
+            float averageWeight = edgeweight / (float)edges;
+            Debug.WriteLine("Tiles: " + tiles);
+            Debug.WriteLine("Edges: " + edges);
+            Debug.WriteLine("Edge weight total: " + edgeweight);
+            Debug.WriteLine("Average edge weight: " + averageWeight);
+        }
 
         #endregion
     }
