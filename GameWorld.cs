@@ -163,7 +163,7 @@ namespace MortensWay
             }
 
 
-            #region gamemap
+          
             //Fence
             for (int i = 3; i < 12; i++)
             {

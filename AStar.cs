@@ -96,74 +96,74 @@ namespace MortensWay
             return 14 * dstX + 10 * (dstY - dstX);
         }
 
-        private List<Tile> GetNeighbours(Tile currentTile)
-        {
-            List<Tile> neighbours = new List<Tile>();
-            Vector2[] directions = 
-            {
-                new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, -1), new Vector2(0, 1),  // Retning: N, S, Ø, V
-                new Vector2(-1, -1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(1, 1) // Diagonal bevægelse
-            };
-
-            foreach (Vector2 direction in directions)
-            {
-                Vector2 neighbourPos = currentTile.Position + direction;
-
-                if (cells.TryGetValue(neighbourPos, out Tile neighbour) && neighbour.Walkable)
-                {
-                    neighbours.Add(neighbour);
-                }
-            }
-
-            return neighbours;
-        }
-
-        //private List<Tile> GetNeighbours(Tile curCell)
+        //private List<Tile> GetNeighbours(Tile currentTile)
         //{
-        //    List<Tile> neighbours = new List<Tile>(8);
-        //    var wallSprite = TileTypes.Stone;
-        //    for (int i = -1; i <= 1; i++)
+        //    List<Tile> neighbours = new List<Tile>();
+        //    Vector2[] directions = 
         //    {
-        //        for (int j = -1; j <= 1; j++)
+        //        new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, -1), new Vector2(0, 1),  // Retning: N, S, Ø, V
+        //        new Vector2(-1, -1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(1, 1) // Diagonal bevægelse
+        //    };
+
+        //    foreach (Vector2 direction in directions)
+        //    {
+        //        Vector2 neighbourPos = currentTile.Position + direction;
+
+        //        if (cells.TryGetValue(neighbourPos, out Tile neighbour) && neighbour.Walkable)
         //        {
-        //            if (i == 0 && j == 0)
-        //            {
-        //                continue;
-        //            }
-
-        //            Tile curNeighbour;
-        //            if (cells.TryGetValue(new Vector2(curCell.Position.X + i, curCell.Position.Y + j), out var cell))
-        //            {
-        //                curNeighbour = cell;
-        //            }
-        //            else
-        //            {
-        //                continue;
-        //            }
-
-        //            if (GameWorld.Instance.sprites["Wall"] == curNeighbour.Sprite)
-        //            {
-        //                continue;
-        //            }
-
-        //            //hjørner
-        //            switch (i)
-        //            {
-        //                case -1 when j == 1 && (cells[curCell.Position + new Vector2(i, 0)].Sprite == wallSprite || cells[curCell.Position + new Vector2(0, j)].Sprite == wallSprite):
-        //                case 1 when j == 1 && (cells[curCell.Position + new Vector2(i, 0)].Sprite == wallSprite || cells[curCell.Position + new Vector2(0, j)].Sprite == wallSprite):
-        //                case -1 when j == -1 && (cells[curCell.Position + new Vector2(i, 0)].Sprite == wallSprite || cells[curCell.Position + new Vector2(0, j)].Sprite == wallSprite):
-        //                case 1 when j == -1 && (cells[curCell.Position + new Vector2(i, 0)].Sprite == wallSprite || cells[curCell.Position + new Vector2(0, j)].Sprite == wallSprite):
-        //                    continue;
-        //                default:
-        //                    neighbours.Add(curNeighbour);
-        //                    break;
-        //            }
+        //            neighbours.Add(neighbour);
         //        }
-
         //    }
 
         //    return neighbours;
         //}
+
+        private List<Tile> GetNeighbours(Tile curCell)
+        {
+            List<Tile> neighbours = new List<Tile>(8);
+            //var wallSprite = TileTypes.Stone;
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0)
+                    {
+                        continue;
+                    }
+
+                    Tile curNeighbour;
+                    if (cells.TryGetValue(new Vector2(curCell.Position.X + i, curCell.Position.Y + j), out var cell))
+                    {
+                        curNeighbour = cell;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    if ( curNeighbour.Type.Equals(TileTypes.Stone))
+                    {
+                        continue;
+                    }
+
+                    //hjørner
+                    switch (i)
+                    {
+                        case -1 when j == 1 && (cells[curCell.Position + new Vector2(i, 0)].Type.Equals(TileTypes.Stone) || cells[curCell.Position + new Vector2(0, j)].Type.Equals(TileTypes.Stone)):
+                        case 1 when j == 1 && (cells[curCell.Position + new Vector2(i, 0)].Type.Equals(TileTypes.Stone) || cells[curCell.Position + new Vector2(0, j)].Type.Equals(TileTypes.Stone)):
+                        case -1 when j == -1 && (cells[curCell.Position + new Vector2(i, 0)].Type.Equals(TileTypes.Stone) || cells[curCell.Position + new Vector2(0, j)].Type.Equals(TileTypes.Stone)):
+                        case 1 when j == -1 && (cells[curCell.Position + new Vector2(i, 0)].Type.Equals(TileTypes.Stone) || cells[curCell.Position + new Vector2(0, j)].Type.Equals(TileTypes.Stone)):
+                            continue;
+                        default:
+                            neighbours.Add(curNeighbour);
+                            break;
+                    }
+                }
+
+            }
+
+            return neighbours;
+        }
 
     }
 
