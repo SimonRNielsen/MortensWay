@@ -124,7 +124,7 @@ namespace MortensWay
         private void SpawnMonster()
         {
 
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             monster.IsAlive = true;
             GameWorld.AddObject(monster);
 
