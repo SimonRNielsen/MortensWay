@@ -219,47 +219,6 @@ namespace MortensWay
 
 
             //grass
-            #region grass
-            //for (int i = 0; i < 15; i++)
-            //{
-            //    for (int j = 0; j < 3; j++)
-            //    {
-            //        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j))); 
-            //    }
-            //}
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    for (int j = 3; j < 10; j++)
-            //    {
-            //        if (i < 4)
-            //        {
-            //            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
-            //        }
-            //        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * (i + 10), 64 * j)));
-            //    }
-            //}
-            //for (int i = 10; i < 15; i++)
-            //{
-            //    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 0, 64 * i)));
-            //    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 14, 64 * i)));
-            //    if (i < 13 || i > 13)
-            //    {
-            //        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 1, 64 * i)));
-            //    }
-            //}
-            //for (int i = 3; i < 13; i++)
-            //{
-            //    if (i < 5 || i > 8)
-            //    {
-            //        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * 11)));
-            //    }
-            //}
-            //grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 2, 64 * 14)));
-            //grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 14)));
-            //grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 13, 64 * 14)));
-            //grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 12)));
-            #endregion
-
             for (int j = 0; j < 15; j++)
             {
                 for (int i = 0; i < 15; i++)
@@ -267,41 +226,64 @@ namespace MortensWay
                     TileTypes tile;
                     switch (i)
                     {
-                        //case 1 when j > 5: //Test
-                        //    tile = TileTypes.Fence;
-                        //    break;
+                        case 0 when j == 13:
+                            tile = TileTypes.Portal;
+                            break;
+                        case 1 when j == 3:
+                            tile = TileTypes.TowerKey;
+                            break;
+                        case 13 when j == 12:
+                            tile = TileTypes.TowerPortion;
+                            break;
+                        case > 2 when i < 12 && (j == 12 || j == 14):
+                            tile = TileTypes.Fence;
+                            break;
+                        case > 2 when i < 12 && j == 13:
+                            tile = TileTypes.FencePath;
+                            break;
+                        case 1 when j == 13:
+                        case 2 when j > 10 && j < 14:
+                        case 3 when j == 11:
+                        case 4 when j > 2 && j < 12:
+                        case 5 when j == 3:
+                        case 6 when j == 3:
+                        case 7 when j == 3:
+                        case 8 when j == 3:
+                        case 9 when j > 2 && j < 12:
+                        case 10 when j == 11:
+                        case 11 when j == 11:
+                        case 12 when j == 11 || j == 13:
+                        case 13 when j == 11 || j == 13:
+                            tile = TileTypes.Path;
+                            break;
+                        case 5 when j > 3 && j < 12:
+                        case 6 when j > 3 && j < 12:
+                        case 7 when j > 3 && j < 12:
+                        case 8 when j > 3 && j < 12:
+                            tile = TileTypes.Stone;
+                            break;
                         default:
                             tile = TileTypes.Grass;
                             break;
                     }
                     Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
-                    //gameObjects.Add(t);
+                    gameObjects.Add(t);
                     grid.Add(t);
                 }
             }
-
-
-            foreach (Tile t in grid)
-            {
-                gameObjects.Add(t);
-            }
-
-            #endregion
-            //Add edges to tiles in grid:
-
+            //Adding key
+            //keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            //gameObjects.Add(keyOne);
+            //keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            //gameObjects.Add(keyTwo);
+            keyOne = ChangeToKey();
+            keyTwo = ChangeToKey();
             foreach (Tile entry in grid)
             {
                 entry.CreateEdges(grid);
             }
 
-            //Adding key
-            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            gameObjects.Add(keyOne);
-            grid.Add(keyOne);
-            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            gameObjects.Add(keyTwo);
-            grid.Add(keyTwo);
-
+            #endregion
 
             keyboard.CloseGame += ExitGame;
 
@@ -312,7 +294,7 @@ namespace MortensWay
             List<Tile> pathTest = BFS.FindPath(endNode, startNode);
             foreach (Tile t in pathTest)
             {
-                t.Color = Color.Yellow;
+                t.Color = Color.LightBlue;
 
             }
         }
@@ -348,6 +330,17 @@ namespace MortensWay
                 gameObjects.AddRange(newGameObjects);
             }
             newGameObjects.Clear();
+
+#if DEBUG
+
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+                foreach (GameObject<Enum> entry in gameObjects)
+                {
+                    if (entry is Tile && (entry as Tile).FencePath)
+                        (entry as Tile).Walkable = false;
+                }
+
+#endif
 
             base.Update(gameTime);
 
@@ -495,6 +488,28 @@ namespace MortensWay
             }
 
             return placement;
+
+        }
+
+        private Tile ChangeToKey()
+        {
+
+            bool pickRandom = true;
+            Tile tile = new Tile(TileTypes.Key, Vector2.Zero);
+            while (pickRandom)
+            {
+                int something = random.Next(0, gameObjects.Count);
+                if (gameObjects[something] is Tile)
+                {
+                    tile = gameObjects[something] as Tile;
+                    if (tile.Walkable && !tile.FencePath && (tile.Type.Equals(TileTypes.Grass) || tile.Type.Equals(TileTypes.Path)))
+                    {
+                        tile.ChangeToKey();
+                        pickRandom = false;
+                    }
+                }
+            }
+            return tile;
 
         }
         private void TnEDebug()
