@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using SharpDX.Direct3D9;
 using SharpDX.Direct2D1.Effects;
 
 namespace MortensWay
@@ -24,6 +25,14 @@ namespace MortensWay
         private Enum originalType;
         private Texture2D originalTexture;
 
+        public int G { get; set; }
+        public int H { get; set; }
+        public int F => G + H;
+
+
+
+
+        //public HashSet<Edge> Edges { get => edges; }
         public HashSet<Edge> Edges
         {
             get
@@ -160,6 +169,9 @@ namespace MortensWay
                 //edges = realEdges;
             }
 
+            G = 0;
+            H = 0;
+
         }
 
         public void LayerType(Enum type)
@@ -198,6 +210,7 @@ namespace MortensWay
             sprite = originalTexture;
             type = originalType;
         }
+
 
     }
 }

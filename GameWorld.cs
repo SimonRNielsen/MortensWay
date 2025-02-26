@@ -44,6 +44,21 @@ namespace MortensWay
         //private static List<T> tileObjects = new List<Tile>();
 
 
+        //Irene tester Astar
+        private static GameWorld instance;
+
+        public static GameWorld Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameWorld();
+                }
+                return instance;
+            }
+        }
+
         #endregion
         #endregion
         #region Properties
@@ -93,8 +108,119 @@ namespace MortensWay
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
             gameObjects.Add(playerMorten);
 
+            ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
+            //Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
+
+            //// Eksempel: Tilføj tiles til cells
+            //for (int x = 0; x < 10; x++)
+            //{
+            //    for (int y = 0; y < 10; y++)
+            //    {
+            //        Vector2 position = new Vector2(x, y);
+            //        Tile tile = new Tile(TileTypes.Grass, position);
+            //        cells.Add(position, tile);
+            //    }
+            //}
+
+            //AStar astar = new AStar(cells);
+            //List<Tile> path = astar.FindPath(new Vector2(0, 0), new Vector2(5, 5));
+
+            //if (path != null)
+            //{
+            //    Console.WriteLine("Path found");
+            //    foreach (Tile tile in path)
+            //    {
+            //        Console.WriteLine($"({tile.Position.X}, {tile.Position.Y})");
+            //    }
+            //}
+            //else 
+            //{
+            //    Console.WriteLine("No path found.");
+            //}
+            ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
 
             #region gamemap
+            //grass
+            for (int j = 0; j < 15; j++)
+                {
+                    for (int i = 0; i < 15; i++)
+                    {
+                        TileTypes tile;
+                        switch (i)
+                        {
+                            //case 1 when j > 5: //Test
+                            //    tile = TileTypes.Fence;
+                            //    break;
+                            default:
+                                tile = TileTypes.Grass;
+                                break;
+                        }
+                        Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
+                        gameObjects.Add(t);
+                        grid.Add(t);
+                    }
+                }
+            foreach (Tile entry in grid)
+            {
+                entry.CreateEdges(grid);
+            }
+
+
+          
+            //Fence
+            for (int i = 3; i < 12; i++)
+            {
+
+                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
+                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
+            }
+
+            //Fence path
+            for (int i = 3; i < 12; i++)
+            {
+                grid.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
+
+            }
+
+            //Dirt & stone
+            for (int i = 5; i < 9; i++)
+            {
+                for (int j = 4; j < 12; j++)
+                {
+                    if (j < 11)
+                    {
+                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
+                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
+                    }
+                    grid.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
+                }
+            }
+            for (int i = 4; i < 10; i++)
+            {
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
+            }
+            for (int i = 1; i < 5; i++)
+            {
+                if (i < 3)
+                {
+                    grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
+                }
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
+            }
+            grid.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
+            grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
+
+            //Towers & Portal
+            grid.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
+            grid.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
+            grid.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
+
+
             //grass
             for (int j = 0; j < 15; j++)
             {
@@ -165,8 +291,8 @@ namespace MortensWay
             keyboard.CloseGame += ExitGame;
             
             //Test of BFS: 
-            Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+            Tile startNode = (Tile)(gameObjects.Find(x => x.Position == playerMorten.Position && x != playerMorten));
+            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.Key));
             BFS.BFSMethod(startNode, endNode);
             List<Tile> pathTest = BFS.FindPath(endNode, startNode);
             foreach (Tile t in pathTest)
@@ -174,6 +300,17 @@ namespace MortensWay
                 t.Color = Color.LightBlue;
 
             }
+
+            ////Test af Astar
+            //Tile startPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
+            //Tile endPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+            //AStar.FindPath(startPoint.Position, endPoint.Position);
+            //List<Tile> pathAstarTest = AStar.FindPath(startPoint, endPoint);
+            //foreach (Tile q in pathAstarTest)
+            //{
+            //    q.Color = Color.Violet;
+
+            //}
         }
 
 
