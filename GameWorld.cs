@@ -166,7 +166,10 @@ namespace MortensWay
                             tile = TileTypes.Fence;
                             break;
                         case > 2 when i < 12 && j == 13:
-                            tile = TileTypes.FencePath;
+                            if (i == 4 || i == 7 || i == 10)
+                                tile = TileTypes.FencePath;
+                            else
+                                tile = TileTypes.Path;
                             break;
                         case 1 when j == 13:
                         case 2 when j > 10 && j < 14:
@@ -290,7 +293,7 @@ namespace MortensWay
                     tile.Color = Color.White;
                 }
                 Tile startNode = destinations[index];
-                Tile endNode = destinations[index + 1]; 
+                Tile endNode = destinations[index + 1];
                 index++;
                 BFS.BFSMethod(startNode, endNode);
                 List<Tile> pathTest = BFS.FindPath(endNode, startNode);
@@ -302,8 +305,9 @@ namespace MortensWay
                 t.IsBackground = true;
                 t.Start();
                 arrived = false;
-
             }
+            else if (index == destinations.Length - 1 && arrived)
+                Reset();
 
             base.Update(gameTime);
 
@@ -495,6 +499,20 @@ namespace MortensWay
             Debug.WriteLine("Edge weight total: " + edgeweight);
             Debug.WriteLine("Average edge weight: " + averageWeight);
             Debug.WriteLine("Morten has moved {0} tiles", TilesMoved);
+        }
+
+        private void Reset()
+        {
+            foreach (Tile entry in grid)
+            {
+                entry.SetOriginalState();
+            }
+            playerMorten.Position = startPosition;
+            keyOne = ChangeToKey();
+            keyTwo = ChangeToKey();
+            destinations[1] = keyOne;
+            destinations[3] = keyTwo;
+            index = 0;
         }
 
         #endregion
