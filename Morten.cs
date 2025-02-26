@@ -11,6 +11,7 @@ namespace MortensWay
 {
     public class Morten : GameObject<Enum>
     {
+        
         public Morten(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
             this.layer = 1f;
@@ -27,6 +28,7 @@ namespace MortensWay
 
             foreach (Tile entry in path)
             {
+                GameWorld.TilesMoved++;
                 position = entry.Position;
                 if (entry.FencePath)
                     entry.Walkable = false;

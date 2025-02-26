@@ -36,6 +36,8 @@ namespace MortensWay
         public static readonly object syncGameObjects = new object();
         public Morten playerMorten;
         private static bool arrived = true;
+        private int index;
+        private Tile[] destinations = new Tile[6];
 
         public Random random = new Random();
         public static Tile keyOne;
@@ -68,6 +70,7 @@ namespace MortensWay
         /// </summary>
         public static bool GameRunning { get => gameRunning; }
 
+        public static int TilesMoved = 0;
         public static bool Arrived { get => arrived; set => arrived = value; }
 
         /// <summary>
@@ -199,11 +202,16 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-
+            destinations[0] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            destinations[1] = keyOne;
+            destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
+            destinations[3] = keyTwo;
+            destinations[4] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerKey);
+            destinations[5] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
             #endregion
 
             keyboard.CloseGame += ExitGame;
-            
+
             //Test of BFS: 
             //Tile startNode = (Tile)(gameObjects.Find(x => x.Position == playerMorten.Position && x != playerMorten));
             //Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.Key));
@@ -270,17 +278,22 @@ namespace MortensWay
 
 #endif
 
-            if (arrived)
+            if (arrived && (index < destinations.Length - 1))
             {
-
-                Tile startNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-                Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
+                foreach (Tile tile in grid)
+                {
+                    tile.Discovered = false;
+                    tile.Parent = default;
+                    tile.Color = Color.White;
+                }
+                Tile startNode = destinations[index];
+                Tile endNode = destinations[index + 1]; 
+                index++;
                 BFS.BFSMethod(startNode, endNode);
                 List<Tile> pathTest = BFS.FindPath(endNode, startNode);
                 foreach (Tile tile in pathTest)
                 {
                     tile.Color = Color.LightBlue;
-
                 }
                 Thread t = new Thread(() => playerMorten.FollowPath(pathTest));
                 t.IsBackground = true;
@@ -316,7 +329,7 @@ namespace MortensWay
                         DrawCollisionBox(gameObject);
                     }
             }
-
+            _spriteBatch.DrawString(gameFont, "Tiles moved: " + TilesMoved.ToString(), new Vector2(10, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -478,6 +491,7 @@ namespace MortensWay
             Debug.WriteLine("Edges: " + edges);
             Debug.WriteLine("Edge weight total: " + edgeweight);
             Debug.WriteLine("Average edge weight: " + averageWeight);
+            Debug.WriteLine("Morten has moved {0} tiles", TilesMoved);
         }
 
         #endregion
