@@ -46,9 +46,6 @@ namespace MortensWay
         public static Tile keyOne;
         public static Tile keyTwo;
 
-        //private static List<T> tileObjects = new List<Tile>();
-
-
         //Irene tester Astar
         private static GameWorld instance;
 
