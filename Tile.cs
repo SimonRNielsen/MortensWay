@@ -127,6 +127,7 @@ namespace MortensWay
             Thread.Sleep(1000);
             monster.IsAlive = true;
             GameWorld.AddObject(monster);
+            GameWorld.soundEffects[SoundEffects.GooseHonk].Play();
 
         }
 

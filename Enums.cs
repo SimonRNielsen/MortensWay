@@ -51,7 +51,7 @@
     public enum SoundEffects
     {
 
-
+        GooseHonk
 
     }
 
