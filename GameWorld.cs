@@ -46,9 +46,6 @@ namespace MortensWay
         public static Tile keyOne;
         public static Tile keyTwo;
 
-        //private static List<T> tileObjects = new List<Tile>();
-
-
         //Irene tester Astar
         private static GameWorld instance;
 
@@ -156,6 +153,7 @@ namespace MortensWay
             {
                 for (int i = 0; i < 15; i++)
                 {
+                    bool fencePath = false;
                     TileTypes tile;
                     switch (i)
                     {
@@ -172,6 +170,7 @@ namespace MortensWay
                             tile = TileTypes.Fence;
                             break;
                         case > 2 when i < 12 && j == 13:
+                            fencePath = true;
                             if (i == 4 || i == 7 || i == 10)
                                 tile = TileTypes.FencePath;
                             else
@@ -202,7 +201,7 @@ namespace MortensWay
                             tile = TileTypes.Grass;
                             break;
                     }
-                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
+                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j), fencePath);
                     gameObjects.Add(t);
                     grid.Add(t);
                 }
@@ -343,6 +342,8 @@ namespace MortensWay
                     }
             }
             _spriteBatch.DrawString(gameFont, "Tiles moved: " + TilesMoved.ToString(), new Vector2(10, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
+            _spriteBatch.DrawString(gameFont, "Press B for BFS \n" + "Press A for A* \n" + "Press R for restart \n" + "Press esc for exit", new Vector2(_graphics.PreferredBackBufferWidth - 280, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
