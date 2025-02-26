@@ -20,17 +20,17 @@ namespace MortensWay
 
         public int Weight { get => weight; private set => weight = value; }
         public Tile From { get => from; }
-        public Tile To { get => to; }
-        //public Tile To
-        //{
-        //    get
-        //    {
-        //        if (to.Walkable)
-        //            return to;
-        //        else 
-        //            return null;
-        //    }
-        //}
+        //public Tile To { get => to; }
+        public Tile To
+        {
+            get
+            {
+                if (to.Walkable)
+                    return to;
+                else
+                    return null;
+            }
+        }
 
         #endregion
         #region Constructor

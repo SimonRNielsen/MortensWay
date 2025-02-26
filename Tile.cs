@@ -45,24 +45,24 @@ namespace MortensWay
                     t.IsBackground = true;
                     t.Start();
                     HashSet<Edge> removeEdges = new HashSet<Edge>(); //Hashset for edges that should be removed
-                    foreach (Edge e in edges) //Looks at all edges going from this tile
-                    {
-                        foreach (Edge f in e.To.edges) //Looks at all the edges from the Tile that this tile leads to
-                        {
-                            if (f.To == this) //If the edge leads to this tile, the edge is added to a remove list
-                            {
-                                removeEdges.Add(f);
-                            }
-                        }
-                        if (removeEdges.Count > 0)
-                        {
-                            foreach (Edge remove in removeEdges) //All removeEdges are removed from the tile he Tile that leads to this tile
-                            {
-                                e.To.edges.Remove(remove);
-                            }
-                        }
-                    }
-                    edges = fakeEdges; //Evt. fjerne reference til denne edge fra andre via metode? -> Se ovenfor
+                    //foreach (Edge e in edges) //Looks at all edges going from this tile
+                    //{
+                    //    foreach (Edge f in e.To.edges) //Looks at all the edges from the Tile that this tile leads to
+                    //    {
+                    //        if (f.To == this) //If the edge leads to this tile, the edge is added to a remove list
+                    //        {
+                    //            removeEdges.Add(f);
+                    //        }
+                    //    }
+                    //    if (removeEdges.Count > 0)
+                    //    {
+                    //        foreach (Edge remove in removeEdges) //All removeEdges are removed from the tile he Tile that leads to this tile
+                    //        {
+                    //            e.To.edges.Remove(remove);
+                    //        }
+                    //    }
+                    //}
+                    //edges = fakeEdges; //Evt. fjerne reference til denne edge fra andre via metode? -> Se ovenfor
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace MortensWay
                     }
                 }
 
-            realEdges = edges; //Måske udkommenteres?
+            //realEdges = edges; //Måske udkommenteres?
 
         }
 
@@ -152,7 +152,7 @@ namespace MortensWay
             {
                 monster.IsAlive = false;
                 walkable = true;
-                edges = realEdges;
+                //edges = realEdges;
             }
 
         }
