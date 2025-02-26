@@ -202,12 +202,13 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-            destinations[0] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            Tile start = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            destinations[0] = start;
             destinations[1] = keyOne;
             destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
             destinations[3] = keyTwo;
             destinations[4] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerKey);
-            destinations[5] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            destinations[5] = start;
             #endregion
 
             keyboard.CloseGame += ExitGame;
