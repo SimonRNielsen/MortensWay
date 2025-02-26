@@ -85,7 +85,7 @@ namespace MortensWay
         /// <param name="soundEffects">Dictionary containing SoundEffects with Enum as the key</param>
         private static void LoadSoundEffects(ContentManager content, Dictionary<Enum, SoundEffect> soundEffects)
         {
-
+            soundEffects.Add(SoundEffects.GooseHonk, content.Load<SoundEffect>("Sounds\\gooseSound_Short"));
         }
 
         /// <summary>

@@ -17,6 +17,8 @@ namespace MortensWay
 
         private static bool gameRunning = true;
         private static bool debugMode = false;
+        private static bool algorithmIsChosen = false;
+        private static AlgorithmType chosenAlgorithm; 
 
         #region Collections, Assets, Objects & Eventhandlers
 
@@ -38,6 +40,7 @@ namespace MortensWay
         private static bool arrived = true;
         private int index;
         private Tile[] destinations = new Tile[6];
+        private Vector2 startPosition;
 
         public Random random = new Random();
         public static Tile keyOne;
@@ -72,6 +75,10 @@ namespace MortensWay
 
         public static int TilesMoved = 0;
         public static bool Arrived { get => arrived; set => arrived = value; }
+
+        public static bool AlgorithmIsChosen { get => algorithmIsChosen; set => algorithmIsChosen = value; }
+
+        public static AlgorithmType ChosenAlgorithm { get => chosenAlgorithm; set => chosenAlgorithm = value; }
 
         /// <summary>
         /// Enables/Disables collision-textures
@@ -109,6 +116,7 @@ namespace MortensWay
 
             //Adding Morten instants
             playerMorten = new Morten(MortensEnum.Bishop, new Vector2(64, 64 * 13));
+            startPosition = playerMorten.Position;
             gameObjects.Add(playerMorten);
 
             ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
@@ -164,7 +172,10 @@ namespace MortensWay
                             tile = TileTypes.Fence;
                             break;
                         case > 2 when i < 12 && j == 13:
-                            tile = TileTypes.FencePath;
+                            if (i == 4 || i == 7 || i == 10)
+                                tile = TileTypes.FencePath;
+                            else
+                                tile = TileTypes.Path;
                             break;
                         case 1 when j == 13:
                         case 2 when j > 10 && j < 14:
@@ -202,12 +213,13 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-            destinations[0] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            Tile start = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            destinations[0] = start;
             destinations[1] = keyOne;
             destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
             destinations[3] = keyTwo;
             destinations[4] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerKey);
-            destinations[5] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            destinations[5] = start;
             #endregion
 
             keyboard.CloseGame += ExitGame;
@@ -278,7 +290,7 @@ namespace MortensWay
 
 #endif
 
-            if (arrived && (index < destinations.Length - 1))
+            if (algorithmIsChosen && arrived && (index < destinations.Length - 1))
             {
                 foreach (Tile tile in grid)
                 {
@@ -287,7 +299,7 @@ namespace MortensWay
                     tile.Color = Color.White;
                 }
                 Tile startNode = destinations[index];
-                Tile endNode = destinations[index + 1]; 
+                Tile endNode = destinations[index + 1];
                 index++;
                 BFS.BFSMethod(startNode, endNode);
                 List<Tile> pathTest = BFS.FindPath(endNode, startNode);
@@ -299,8 +311,9 @@ namespace MortensWay
                 t.IsBackground = true;
                 t.Start();
                 arrived = false;
-
             }
+            else if (index == destinations.Length - 1 && arrived)
+                Reset();
 
             base.Update(gameTime);
 
@@ -492,6 +505,21 @@ namespace MortensWay
             Debug.WriteLine("Edge weight total: " + edgeweight);
             Debug.WriteLine("Average edge weight: " + averageWeight);
             Debug.WriteLine("Morten has moved {0} tiles", TilesMoved);
+        }
+
+        private void Reset()
+        {
+            foreach (Tile entry in grid)
+            {
+                entry.SetOriginalState();
+            }
+            playerMorten.Position = startPosition;
+            keyOne = ChangeToKey();
+            keyTwo = ChangeToKey();
+            destinations[1] = keyOne;
+            destinations[3] = keyTwo;
+            index = 0;
+            AlgorithmIsChosen = false; 
         }
 
         #endregion

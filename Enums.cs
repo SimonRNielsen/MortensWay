@@ -43,11 +43,15 @@
 
     }
 
-
+    public enum AlgorithmType
+    {
+        BFS,
+        AStat
+    }
     public enum SoundEffects
     {
 
-
+        GooseHonk
 
     }
 

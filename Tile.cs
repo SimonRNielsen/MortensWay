@@ -124,9 +124,10 @@ namespace MortensWay
         private void SpawnMonster()
         {
 
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             monster.IsAlive = true;
             GameWorld.AddObject(monster);
+            GameWorld.soundEffects[SoundEffects.GooseHonk].Play();
 
         }
 
@@ -136,12 +137,13 @@ namespace MortensWay
         public void SetOriginalState()
         {
 
+            color = Color.White;
             if (type is TileTypes.FencePath)
             {
                 monster.IsAlive = false;
                 walkable = true;
+                color = Color.Red;
             }
-
             G = 0;
             H = 0;
 
