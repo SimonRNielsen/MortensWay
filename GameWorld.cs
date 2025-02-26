@@ -140,88 +140,7 @@ namespace MortensWay
             ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
 
             #region gamemap
-            //grass
-            for (int j = 0; j < 15; j++)
-                {
-                    for (int i = 0; i < 15; i++)
-                    {
-                        TileTypes tile;
-                        switch (i)
-                        {
-                            //case 1 when j > 5: //Test
-                            //    tile = TileTypes.Fence;
-                            //    break;
-                            default:
-                                tile = TileTypes.Grass;
-                                break;
-                        }
-                        Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
-                        gameObjects.Add(t);
-                        grid.Add(t);
-                    }
-                }
-            foreach (Tile entry in grid)
-            {
-                entry.CreateEdges(grid);
-            }
-
-
-          
-            //Fence
-            for (int i = 3; i < 12; i++)
-            {
-
-                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
-                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
-            }
-
-            //Fence path
-            for (int i = 3; i < 12; i++)
-            {
-                grid.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
-
-            }
-
-            //Dirt & stone
-            for (int i = 5; i < 9; i++)
-            {
-                for (int j = 4; j < 12; j++)
-                {
-                    if (j < 11)
-                    {
-                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
-                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
-                    }
-                    grid.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
-                }
-            }
-            for (int i = 4; i < 10; i++)
-            {
-                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
-            }
-            for (int i = 1; i < 5; i++)
-            {
-                if (i < 3)
-                {
-                    grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
-                }
-                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
-                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
-            }
-            grid.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
-            grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
-
-            //Towers & Portal
-            grid.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
-            grid.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
-            grid.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
-
-
-            //grass
+            //Creation of tiles
             for (int j = 0; j < 15; j++)
             {
                 for (int i = 0; i < 15; i++)
@@ -274,11 +193,6 @@ namespace MortensWay
                     grid.Add(t);
                 }
             }
-            //Adding key
-            //keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            //gameObjects.Add(keyOne);
-            //keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            //gameObjects.Add(keyTwo);
             keyOne = ChangeToKey();
             keyTwo = ChangeToKey();
             foreach (Tile entry in grid)
@@ -291,15 +205,15 @@ namespace MortensWay
             keyboard.CloseGame += ExitGame;
             
             //Test of BFS: 
-            Tile startNode = (Tile)(gameObjects.Find(x => x.Position == playerMorten.Position && x != playerMorten));
-            Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.Key));
-            BFS.BFSMethod(startNode, endNode);
-            List<Tile> pathTest = BFS.FindPath(endNode, startNode);
-            foreach (Tile t in pathTest)
-            {
-                t.Color = Color.LightBlue;
+            //Tile startNode = (Tile)(gameObjects.Find(x => x.Position == playerMorten.Position && x != playerMorten));
+            //Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.Key));
+            //BFS.BFSMethod(startNode, endNode);
+            //List<Tile> pathTest = BFS.FindPath(endNode, startNode);
+            //foreach (Tile t in pathTest)
+            //{
+            //    t.Color = Color.LightBlue;
 
-            }
+            //}
 
             ////Test af Astar
             //Tile startPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
