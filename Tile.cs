@@ -136,12 +136,13 @@ namespace MortensWay
         public void SetOriginalState()
         {
 
+            color = Color.White;
             if (type is TileTypes.FencePath)
             {
                 monster.IsAlive = false;
                 walkable = true;
+                color = Color.Red;
             }
-
             G = 0;
             H = 0;
 

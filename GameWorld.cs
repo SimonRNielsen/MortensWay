@@ -519,6 +519,7 @@ namespace MortensWay
             destinations[1] = keyOne;
             destinations[3] = keyTwo;
             index = 0;
+            AlgorithmIsChosen = false; 
         }
 
         #endregion
