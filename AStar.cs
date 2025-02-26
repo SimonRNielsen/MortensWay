@@ -3,8 +3,10 @@ using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MortensWay
 {
@@ -22,9 +24,25 @@ namespace MortensWay
 
         public static Dictionary<Vector2, Tile> Cells { get => cells; set => cells = value; }
 
-        public static List<Tile> FindPath(Vector2 startPoint, Vector2 endPoint)
+        public static List<Tile> FindPath(Vector2 startVector, Vector2 endVector)
         {
-            openList.Add(Cells[startPoint]);
+
+            //Ryder tidligere data
+            openList.Clear();
+            closedList.Clear();
+
+
+            // Sikrer at punkterne findes i cellerne
+            //if (!Cells.ContainsKey(startVector) || !Cells.ContainsKey(endVector))
+            //{
+            //    return null;
+            //}
+
+            Tile startTile = Cells[startVector];
+            Tile endTile = Cells[endVector];
+            Debug.WriteLine($"{startVector}");
+            openList.Add(cells[startVector]);
+
             while (openList.Count > 0)
             {
                 Tile curCell = openList.First();
@@ -38,24 +56,24 @@ namespace MortensWay
                 openList.Remove(curCell);
                 closedList.Add(curCell);
 
-                if (curCell.Position.X == endPoint.X && curCell.Position.Y == endPoint.Y)
+                if (curCell.Position.X == endVector.X && curCell.Position.Y == endVector.Y)
                 {
-                    return RetracePath(Cells[startPoint], Cells[endPoint]);
+                    return RetracePath(Cells[startVector], Cells[endVector]);
                 }
 
                 List<Tile> neighbours = GetNeighbours(curCell);
                 foreach (var neighbour in neighbours)
                 {
-                    if(closedList.Contains(neighbour))
-                    continue;
-                
+                    if (closedList.Contains(neighbour))
+                        continue;
+
                     int newMovementCostToNeighbour = curCell.G + GetDistance(curCell.Position, neighbour.Position);
 
                     if (newMovementCostToNeighbour < neighbour.G || !openList.Contains(neighbour))
                     {
                         neighbour.G = newMovementCostToNeighbour;
                         //udregner H med manhatten princip
-                        neighbour.H = ((Math.Abs((int)neighbour.Position.X - (int)endPoint.X) + Math.Abs((int)endPoint.Y - (int)neighbour.Position.Y)) * 10);
+                        neighbour.H = (((int)Math.Abs(neighbour.Position.X - endVector.X) + (int)Math.Abs(endVector.Y - neighbour.Position.Y)) * 10);
                         neighbour.Parent = curCell;
 
                         if (!openList.Contains(neighbour))
@@ -70,26 +88,26 @@ namespace MortensWay
 
         }
 
-        private static List<Tile> RetracePath(Tile startPoint, Tile endPoint)
+        private static List<Tile> RetracePath(Tile startVector, Tile endVector)
         {
             List<Tile> path = new List<Tile>();
-            Tile currentNode = endPoint;
+            Tile currentNode = endVector;
 
-            while (currentNode != startPoint)
+            while (currentNode != startVector)
             {
                 path.Add(currentNode);
                 currentNode = currentNode.Parent;
             }
-            path.Add(startPoint);
+            path.Add(startVector);
             path.Reverse();
 
             return path;
         }
 
-        private static int GetDistance(Vector2 neighbourPosition, Vector2 endPoint)
+        private static int GetDistance(Vector2 neighbourPosition, Vector2 endVector)
         {
-            int dstX = Math.Abs((int)neighbourPosition.X - (int)endPoint.X);
-            int dstY = Math.Abs((int)neighbourPosition.Y - (int)endPoint.Y);
+            int dstX = Math.Abs((int)neighbourPosition.X - (int)endVector.X);
+            int dstY = Math.Abs((int)neighbourPosition.Y - (int)endVector.Y);
 
             if (dstX > dstY)
             {
@@ -98,7 +116,7 @@ namespace MortensWay
             return 14 * dstX + 10 * (dstY - dstX);
         }
 
-        
+
 
         private static List<Tile> GetNeighbours(Tile curCell)
         {
@@ -114,7 +132,7 @@ namespace MortensWay
                     }
 
                     Tile curNeighbour;
-                    if (Cells.TryGetValue(new Vector2(curCell.Position.X + i, curCell.Position.Y + j), out var cell))
+                    if (Cells.TryGetValue(new Vector2((int)curCell.Position.X + (i * 64), (int)curCell.Position.Y + (j * 64)), out var cell))
                     {
                         curNeighbour = cell;
                     }
@@ -123,7 +141,7 @@ namespace MortensWay
                         continue;
                     }
 
-                    if ( curNeighbour.Type.Equals(TileTypes.Stone))
+                    if (curNeighbour.Type.Equals(TileTypes.Stone) || curNeighbour.Type.Equals(TileTypes.Fence))
                     {
                         continue;
                     }
@@ -131,10 +149,14 @@ namespace MortensWay
                     //hjørner
                     switch (i)
                     {
-                        case -1 when j == 1 && (Cells[curCell.Position + new Vector2(i, 0)].Type.Equals(TileTypes.Stone) || Cells[curCell.Position + new Vector2(0, j)].Type.Equals(TileTypes.Stone)):
-                        case 1 when j == 1 && (Cells[curCell.Position + new Vector2(i, 0)].Type.Equals(TileTypes.Stone) || Cells[curCell.Position + new Vector2(0, j)].Type.Equals(TileTypes.Stone)):
-                        case -1 when j == -1 && (Cells[curCell.Position + new Vector2(i, 0)].Type.Equals(TileTypes.Stone) || Cells[curCell.Position + new Vector2(0, j)].Type.Equals(TileTypes.Stone)):
-                        case 1 when j == -1 && (Cells[curCell.Position + new Vector2(i, 0)].Type.Equals(TileTypes.Stone) || Cells[curCell.Position + new Vector2(0, j)].Type.Equals(TileTypes.Stone)):
+                        case -1 when j == 1 && (Cells[curCell.Position + new Vector2(i * 64, 0)].Type.Equals(TileTypes.Stone) || Cells[curCell.Position + new Vector2(0, j * 64)].Type.Equals(TileTypes.Stone)):
+                        case 1 when j == 1 && (Cells[curCell.Position + new Vector2(i * 64, 0)].Type.Equals(TileTypes.Stone) || Cells[curCell.Position + new Vector2(0, j * 64)].Type.Equals(TileTypes.Stone)):
+                        case -1 when j == -1 && (Cells[curCell.Position + new Vector2(i * 64, 0)].Type.Equals(TileTypes.Stone) || Cells[curCell.Position + new Vector2(0, j * 64)].Type.Equals(TileTypes.Stone)):
+                        case 1 when j == -1 && (Cells[curCell.Position + new Vector2(i * 64, 0)].Type.Equals(TileTypes.Stone) || Cells[curCell.Position + new Vector2(0, j * 64)].Type.Equals(TileTypes.Stone)):
+                        case -1 when j == 1 && (Cells[curCell.Position + new Vector2(i * 64, 0)].Type.Equals(TileTypes.Fence) || Cells[curCell.Position + new Vector2(0, j * 64)].Type.Equals(TileTypes.Fence)):
+                        case 1 when j == 1 && (Cells[curCell.Position + new Vector2(i * 64, 0)].Type.Equals(TileTypes.Fence) || Cells[curCell.Position + new Vector2(0, j * 64)].Type.Equals(TileTypes.Fence)):
+                        case -1 when j == -1 && (Cells[curCell.Position + new Vector2(i * 64, 0)].Type.Equals(TileTypes.Fence) || Cells[curCell.Position + new Vector2(0, j * 64)].Type.Equals(TileTypes.Fence)):
+                        case 1 when j == -1 && (Cells[curCell.Position + new Vector2(i * 64, 0)].Type.Equals(TileTypes.Fence) || Cells[curCell.Position + new Vector2(0, j * 64)].Type.Equals(TileTypes.Fence)):
                             continue;
                         default:
                             neighbours.Add(curNeighbour);

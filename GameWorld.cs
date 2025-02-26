@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 using System.Diagnostics;
+using System.Net;
 //using SharpDX.Direct3D9;
 
 namespace MortensWay
@@ -37,6 +38,7 @@ namespace MortensWay
         public static readonly object syncGameObjects = new object();
         public Morten playerMorten;
         private static bool arrived = true;
+        private static AStar aStar;
 
         public Random random = new Random();
         public static Tile keyOne;
@@ -46,7 +48,7 @@ namespace MortensWay
 
 
         //Irene tester Astar
-        Dictionary<Vector2, Tile> cells;
+        public static Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
 
         //private static GameWorld instance;
 
@@ -164,6 +166,7 @@ namespace MortensWay
                     Tile t = new Tile(tile, new Vector2(64 * i, 64 * j));
                     gameObjects.Add(t);
                     grid.Add(t);
+                    cells.Add(t.Position, t);
                 }
             }
             keyOne = ChangeToKey();
@@ -176,7 +179,7 @@ namespace MortensWay
             #endregion
 
             keyboard.CloseGame += ExitGame;
-            
+
             //Test of BFS: 
             //Tile startNode = (Tile)(gameObjects.Find(x => x.Position == playerMorten.Position && x != playerMorten));
             //Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.Key));
@@ -197,12 +200,13 @@ namespace MortensWay
             //{
             //    q.Color = Color.DarkViolet;
             //}
-            //AStar astar = new AStar(cells);
-            //var path = astar.FindPath(startPoint.Position, endPoint.Position);
-            //foreach (var VARIABLE in path)
-            //{
-            //    VARIABLE.Color = Color.Violet;
-            //}
+
+            aStar = new AStar(cells);
+            List<Tile> path = AStar.FindPath(keyOne.Position, keyTwo.Position);
+            foreach (var VARIABLE in path)
+            {
+                VARIABLE.Color = Color.Violet;
+            }
         }
 
 
