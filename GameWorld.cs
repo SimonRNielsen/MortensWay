@@ -194,7 +194,7 @@ namespace MortensWay
             destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
             destinations[3] = keyTwo;
             destinations[4] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerKey);
-            destinations[5] = start;
+            destinations[5] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
             #endregion
 
             keyboard.CloseGame += ExitGame;
