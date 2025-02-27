@@ -31,13 +31,7 @@ namespace MortensWay
             openList.Clear();
             closedList.Clear();
 
-
-            // Sikrer at punkterne findes i cellerne
-            //if (!Cells.ContainsKey(startVector) || !Cells.ContainsKey(endVector))
-            //{
-            //    return null;
-            //}
-
+            //Using tile as cell
             Tile startTile = Cells[startVector];
             Tile endTile = Cells[endVector];
             Debug.WriteLine($"{startVector}");
@@ -72,6 +66,7 @@ namespace MortensWay
                     if (newMovementCostToNeighbour < neighbour.G || !openList.Contains(neighbour))
                     {
                         neighbour.G = newMovementCostToNeighbour;
+
                         //udregner H med manhatten princip
                         neighbour.H = (((int)Math.Abs(neighbour.Position.X - endVector.X) + (int)Math.Abs(endVector.Y - neighbour.Position.Y)) * 10);
                         neighbour.Parent = curCell;
