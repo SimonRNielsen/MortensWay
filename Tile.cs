@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using SharpDX.Direct3D9;
-using SharpDX.Direct2D1.Effects;
 
 namespace MortensWay
 {
