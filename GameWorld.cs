@@ -338,7 +338,9 @@ namespace MortensWay
                     foreach (GameObject<Enum> gameObject in gameObjects)
                     {
                         gameObject.Draw(_spriteBatch);
+#if DEBUG
                         DrawCollisionBox(gameObject);
+#endif
                     }
             }
             _spriteBatch.DrawString(gameFont, "Tiles moved: " + TilesMoved.ToString(), new Vector2(10, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
