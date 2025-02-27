@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MortensWay
 {
     public class Morten : GameObject<Enum>
     {
-        
+
         public Morten(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
             this.layer = 1f;
@@ -39,6 +40,13 @@ namespace MortensWay
 
             GameWorld.Arrived = true;
 
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (GameWorld.Arrived && position == GameWorld.Destinations[5].Position) { }
+            else
+                base.Draw(spriteBatch);
         }
     }
 }

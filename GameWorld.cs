@@ -9,7 +9,6 @@ using System.Threading;
 using System;
 using System.Diagnostics;
 using System.Net;
-//using SharpDX.Direct3D9;
 
 namespace MortensWay
 {
@@ -41,9 +40,10 @@ namespace MortensWay
         public Morten playerMorten;
         private static bool arrived = true;
         private int index;
-        private Tile[] destinations = new Tile[6];
-        private Vector2 startPosition;
+        private static Tile[] destinations = new Tile[6];
+        private static Vector2 startPosition;
         private static AStar aStar;
+        private static bool restart = false;
 
         public Random random = new Random();
         public static Tile keyOne;
@@ -75,12 +75,16 @@ namespace MortensWay
         /// </summary>
         public static bool GameRunning { get => gameRunning; }
 
+        public static bool Restart { get => restart; set => restart = value; }
+
         public static int TilesMoved = 0;
         public static bool Arrived { get => arrived; set => arrived = value; }
 
         public static bool AlgorithmIsChosen { get => algorithmIsChosen; set => algorithmIsChosen = value; }
 
         public static AlgorithmType ChosenAlgorithm { get => chosenAlgorithm; set => chosenAlgorithm = value; }
+        public static Tile[] Destinations { get => destinations; }
+        //public static Vector2 StartPosition { get => startPosition; }
 
         /// <summary>
         /// Enables/Disables collision-textures
@@ -188,16 +192,17 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-            Tile start = (Tile)gameObjects.Find(x => x.Position == startPosition && x != playerMorten);
-            destinations[0] = start;
+            destinations[0] = (Tile)gameObjects.Find(x => x.Position == startPosition && x != playerMorten);
             destinations[1] = keyOne;
             destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
             destinations[3] = keyTwo;
             destinations[4] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerKey);
-            destinations[5] = start;
+            destinations[5] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
             #endregion
 
             keyboard.CloseGame += ExitGame;
+            keyboard.Reset += Reset;
+            keyboard.Restart += ResetCurrent;
 
             //Test of BFS: 
             //Tile startNode = (Tile)(gameObjects.Find(x => x.Position == playerMorten.Position && x != playerMorten));
@@ -278,13 +283,22 @@ namespace MortensWay
                         tile.Color = Color.LightBlue;
                     }
                 }
-                else //if (ChosenAlgorithm == AlgorithmType.AStat)
+                else if (ChosenAlgorithm == AlgorithmType.AStat)
                 {
                     aStar = new AStar(cells);
                     pathTest = AStar.FindPath(destinations[index].Position, destinations[index + 1].Position);
                     foreach (var VARIABLE in pathTest)
                     {
                         VARIABLE.Color = Color.Pink;
+                    }
+                }
+                else if (ChosenAlgorithm == AlgorithmType.DFS)
+                {
+                    DFS.DFSMethod(startNode, endNode);
+                    pathTest = DFS.FindPath(endNode, startNode);
+                    foreach (Tile tile in pathTest)
+                    {
+                        tile.Color = Color.Gold;
                     }
                 }
                 index++;
@@ -294,7 +308,10 @@ namespace MortensWay
                 arrived = false;
             }
             else if (index == destinations.Length - 1 && arrived)
-                Reset();
+            {
+                algorithmIsChosen = false;
+                restart = true;
+            }
 
             base.Update(gameTime);
 
@@ -324,7 +341,7 @@ namespace MortensWay
                     }
             }
             _spriteBatch.DrawString(gameFont, "Tiles moved: " + TilesMoved.ToString(), new Vector2(10, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
-            _spriteBatch.DrawString(gameFont, "Press B for BFS \n" + "Press A for A* \n" + "Press R for restart \n" + "Press ESC for exit", new Vector2(_graphics.PreferredBackBufferWidth - 280, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
+            _spriteBatch.DrawString(gameFont, "Press B for BFS \n" + "Press A for A* \n" + "Press R to keep \ndestinations with new \nalgorithm\n" + "Press esc for exit", new Vector2(_graphics.PreferredBackBufferWidth - 270, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
 
             _spriteBatch.End();
 
@@ -502,7 +519,20 @@ namespace MortensWay
             destinations[1] = keyOne;
             destinations[3] = keyTwo;
             index = 0;
-            AlgorithmIsChosen = false;
+            restart = false;
+        }
+
+        private void ResetCurrent()
+        {
+            foreach (Tile entry in grid)
+            {
+                entry.SetOriginalState();
+            }
+            playerMorten.Position = startPosition;
+            keyOne.ChangeToKey();
+            keyTwo.ChangeToKey();
+            index = 0;
+            AlgorithmIsChosen = true;
         }
 
         #endregion

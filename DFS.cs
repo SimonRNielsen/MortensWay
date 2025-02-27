@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 
 namespace MortensWay
 {
-    internal static class BFS
+    class DFS
     {
-
-
-        public static Tile BFSMethod(Tile startNode, Tile endNode)
+        public static Tile DFSMethod(Tile startNode, Tile endNode)
         {
-            Queue<Tile> queue = new Queue<Tile>(); 
+            Stack<Tile> queue = new Stack<Tile>();
             startNode.Discovered = true; //The first node is marked as discovered, so it is not processed agaain
-            queue.Enqueue(startNode); //The first node is added to the queue.
+            queue.Push(startNode); //The first node is added to the queue.
             while (queue.Count > 0) //Runs as long as the queue isn't empty
             {
-                Tile currentTile = queue.Dequeue(); //The current tile is taken from the queue. 
+                Tile currentTile = queue.Pop(); //The current tile is taken from the queue. 
                 if (currentTile == endNode) //If the current tile is the endnode, the destination has ben reached, and is returned.
                 {
                     return currentTile;
@@ -32,7 +29,7 @@ namespace MortensWay
                         {
                             neighbor.Discovered = true;
                             neighbor.Parent = currentTile;
-                            queue.Enqueue(neighbor);
+                            queue.Push(neighbor);
                         }
                     }
                 }
@@ -67,10 +64,10 @@ namespace MortensWay
 
 
 
-        public static void StartBFS()
+        public static void StartDFS()
         {
-            GameWorld.AlgorithmIsChosen = true ;
-            GameWorld.ChosenAlgorithm = AlgorithmType.BFS;
+            GameWorld.AlgorithmIsChosen = true;
+            GameWorld.ChosenAlgorithm = AlgorithmType.DFS;
         }
 
     }

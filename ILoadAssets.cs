@@ -52,7 +52,7 @@ namespace MortensWay
             sprites.Add(TileTypes.Stone, content.Load<Texture2D>("Sprites\\stone"));
             sprites.Add(TileTypes.TowerKey, content.Load<Texture2D>("Sprites\\church-bell_9988486"));
             sprites.Add(TileTypes.TowerPortion, content.Load<Texture2D>("Sprites\\church-bell"));
-            sprites.Add(TileTypes.Portal, content.Load<Texture2D>("Sprites\\Portal"));
+            sprites.Add(TileTypes.Portal, content.Load<Texture2D>("Sprites\\heaven_2545705"));
             sprites.Add(TileTypes.Key, content.Load<Texture2D>("Sprites\\key"));
 
             #endregion
