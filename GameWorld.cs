@@ -278,13 +278,22 @@ namespace MortensWay
                         tile.Color = Color.LightBlue;
                     }
                 }
-                else //if (ChosenAlgorithm == AlgorithmType.AStat)
+                else if (ChosenAlgorithm == AlgorithmType.AStat)
                 {
                     aStar = new AStar(cells);
                     pathTest = AStar.FindPath(destinations[index].Position, destinations[index + 1].Position);
                     foreach (var VARIABLE in pathTest)
                     {
                         VARIABLE.Color = Color.Pink;
+                    }
+                }
+                else if (ChosenAlgorithm == AlgorithmType.DFS)
+                {
+                    DFS.DFSMethod(startNode, endNode);
+                    pathTest = DFS.FindPath(endNode, startNode);
+                    foreach (Tile tile in pathTest)
+                    {
+                        tile.Color = Color.Gold;
                     }
                 }
                 index++;

@@ -52,6 +52,12 @@ namespace MortensWay
                 GameWorld.TilesMoved = 0; //Reset tile count
                 AStar.StartAStar();
             }
+
+            if (input.IsKeyDown(Keys.D) && !GameWorld.AlgorithmIsChosen)
+            {
+                GameWorld.TilesMoved = 0; //Reset tile count
+                DFS.StartDFS();
+            }
         }
 
         #endregion

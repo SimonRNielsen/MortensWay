@@ -46,7 +46,8 @@
     public enum AlgorithmType
     {
         BFS,
-        AStat
+        AStat,
+        DFS
     }
     public enum SoundEffects
     {
