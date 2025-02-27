@@ -74,7 +74,7 @@ namespace MortensWay
             {
                 if (GameWorld.Restart)
                     Reset?.Invoke();
-                //DFS.StartDFS();
+                DFS.StartDFS();
             }
 
         }
