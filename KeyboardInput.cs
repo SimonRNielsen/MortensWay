@@ -43,11 +43,13 @@ namespace MortensWay
 
             if (input.IsKeyDown(Keys.B) && !GameWorld.AlgorithmIsChosen)
             {
+                GameWorld.TilesMoved = 0; //Reset tile count
                 BFS.StartBFS();
             }
 
             if (input.IsKeyDown(Keys.A) && !GameWorld.AlgorithmIsChosen)
             {
+                GameWorld.TilesMoved = 0; //Reset tile count
                 AStar.StartAStar();
             }
         }
