@@ -307,8 +307,9 @@ namespace MortensWay
                 t.Start();
                 arrived = false;
             }
-            else if (index == destinations.Length - 1 && arrived)
+            else if (index == destinations.Length - 1 && arrived && !restart)
             {
+                soundEffects[SoundEffects.PortalSound].Play();
                 algorithmIsChosen = false;
                 restart = true;
             }

@@ -52,7 +52,8 @@
     public enum SoundEffects
     {
 
-        GooseHonk
+        GooseHonk,
+        PortalSound
 
     }
 

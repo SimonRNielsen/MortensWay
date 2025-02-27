@@ -86,6 +86,9 @@ namespace MortensWay
         private static void LoadSoundEffects(ContentManager content, Dictionary<Enum, SoundEffect> soundEffects)
         {
             soundEffects.Add(SoundEffects.GooseHonk, content.Load<SoundEffect>("Sounds\\gooseSound_Short"));
+
+            soundEffects.Add(SoundEffects.PortalSound, content.Load<SoundEffect>("Sounds\\portalSound"));
+
         }
 
         /// <summary>

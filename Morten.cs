@@ -35,7 +35,7 @@ namespace MortensWay
                     entry.Walkable = false;
                 else if (entry.Type.Equals(TileTypes.Key) && entry == path.Last())
                     entry.ChangeBackFromKey();
-                Thread.Sleep(750);
+                Thread.Sleep(300);
             }
 
             GameWorld.Arrived = true;
