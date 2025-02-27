@@ -68,6 +68,13 @@ namespace MortensWay
                     GameWorld.Restart = false;
                 }
 
+            if (input.IsKeyDown(Keys.D) && !GameWorld.AlgorithmIsChosen)
+            {
+                if (GameWorld.Restart)
+                    Reset?.Invoke();
+                DFS.StartDFS();
+            }
+
         }
 
         #endregion

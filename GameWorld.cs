@@ -9,7 +9,6 @@ using System.Threading;
 using System;
 using System.Diagnostics;
 using System.Net;
-//using SharpDX.Direct3D9;
 
 namespace MortensWay
 {
@@ -41,8 +40,8 @@ namespace MortensWay
         public Morten playerMorten;
         private static bool arrived = true;
         private int index;
-        private Tile[] destinations = new Tile[6];
-        private Vector2 startPosition;
+        private static Tile[] destinations = new Tile[6];
+        private static Vector2 startPosition;
         private static AStar aStar;
         private static bool restart = false;
 
@@ -75,6 +74,7 @@ namespace MortensWay
         /// Handles secure closing of seperate threads
         /// </summary>
         public static bool GameRunning { get => gameRunning; }
+
         public static bool Restart { get => restart; set => restart = value; }
 
         public static int TilesMoved = 0;
@@ -83,6 +83,8 @@ namespace MortensWay
         public static bool AlgorithmIsChosen { get => algorithmIsChosen; set => algorithmIsChosen = value; }
 
         public static AlgorithmType ChosenAlgorithm { get => chosenAlgorithm; set => chosenAlgorithm = value; }
+        public static Tile[] Destinations { get => destinations; }
+        //public static Vector2 StartPosition { get => startPosition; }
 
         /// <summary>
         /// Enables/Disables collision-textures
@@ -190,13 +192,12 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-            Tile start = (Tile)gameObjects.Find(x => x.Position == startPosition && x != playerMorten);
-            destinations[0] = start;
+            destinations[0] = (Tile)gameObjects.Find(x => x.Position == startPosition && x != playerMorten);
             destinations[1] = keyOne;
             destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
             destinations[3] = keyTwo;
             destinations[4] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerKey);
-            destinations[5] = start;
+            destinations[5] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
             #endregion
 
             keyboard.CloseGame += ExitGame;
