@@ -12,6 +12,12 @@ namespace MortensWay
 {
     public class Morten : GameObject<Enum>
     {
+        private int keyCount;
+        private int potionCount;
+
+        public int KeyCount { get => keyCount; set => keyCount = value; }
+        public int PotionCount { get => potionCount; set => potionCount = value; }
+
 
         public Morten(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
@@ -34,7 +40,19 @@ namespace MortensWay
                 if (entry.FencePath)
                     entry.Walkable = false;
                 else if (entry.Type.Equals(TileTypes.Key) && entry == path.Last())
-                    entry.ChangeBackFromKey();
+                { entry.ChangeBackFromKey();
+                    keyCount++;
+                }
+                else if (entry.Type.Equals(TileTypes.TowerKey) && KeyCount>0 && entry == path.Last())
+                {
+                    keyCount--;
+                    potionCount--;
+                }
+                else if (entry.Type.Equals(TileTypes.TowerPortion) && KeyCount > 0 && entry == path.Last())
+                {
+                    keyCount--;
+                    potionCount++;
+                }
                 Thread.Sleep(300);
             }
 
