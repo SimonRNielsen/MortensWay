@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 using System.Diagnostics;
+using System.Net;
+//using SharpDX.Direct3D9;
 
 namespace MortensWay
 {
@@ -18,7 +20,7 @@ namespace MortensWay
         private static bool gameRunning = true;
         private static bool debugMode = false;
         private static bool algorithmIsChosen = false;
-        private static AlgorithmType chosenAlgorithm; 
+        private static AlgorithmType chosenAlgorithm;
 
         #region Collections, Assets, Objects & Eventhandlers
 
@@ -41,25 +43,28 @@ namespace MortensWay
         private int index;
         private Tile[] destinations = new Tile[6];
         private Vector2 startPosition;
+        private static AStar aStar;
 
         public Random random = new Random();
         public static Tile keyOne;
         public static Tile keyTwo;
 
         //Irene tester Astar
-        private static GameWorld instance;
+        public static Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
 
-        public static GameWorld Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new GameWorld();
-                }
-                return instance;
-            }
-        }
+        //private static GameWorld instance;
+
+        //public static GameWorld Instance
+        //{
+        //    get
+        //    {
+        //        if (instance == null)
+        //        {
+        //            instance = new GameWorld();
+        //        }
+        //        return instance;
+        //    }
+        //}
 
         #endregion
         #endregion
@@ -116,36 +121,6 @@ namespace MortensWay
             startPosition = playerMorten.Position;
             gameObjects.Add(playerMorten);
 
-            ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
-            //Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
-
-            //// Eksempel: Tilføj tiles til cells
-            //for (int x = 0; x < 10; x++)
-            //{
-            //    for (int y = 0; y < 10; y++)
-            //    {
-            //        Vector2 position = new Vector2(x, y);
-            //        Tile tile = new Tile(TileTypes.Grass, position);
-            //        cells.Add(position, tile);
-            //    }
-            //}
-
-            //AStar astar = new AStar(cells);
-            //List<Tile> path = astar.FindPath(new Vector2(0, 0), new Vector2(5, 5));
-
-            //if (path != null)
-            //{
-            //    Console.WriteLine("Path found");
-            //    foreach (Tile tile in path)
-            //    {
-            //        Console.WriteLine($"({tile.Position.X}, {tile.Position.Y})");
-            //    }
-            //}
-            //else 
-            //{
-            //    Console.WriteLine("No path found.");
-            //}
-            ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     ///////////////////                     
 
             #region gamemap
             //Creation of tiles
@@ -204,6 +179,7 @@ namespace MortensWay
                     Tile t = new Tile(tile, new Vector2(64 * i, 64 * j), fencePath);
                     gameObjects.Add(t);
                     grid.Add(t);
+                    cells.Add(t.Position, t);
                 }
             }
             keyOne = ChangeToKey();
@@ -212,7 +188,7 @@ namespace MortensWay
             {
                 entry.CreateEdges(grid);
             }
-            Tile start = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal);
+            Tile start = (Tile)gameObjects.Find(x => x.Position == startPosition && x != playerMorten);
             destinations[0] = start;
             destinations[1] = keyOne;
             destinations[2] = (Tile)gameObjects.Find(x => (TileTypes)x.Type == TileTypes.TowerPortion);
@@ -234,16 +210,7 @@ namespace MortensWay
 
             //}
 
-            ////Test af Astar
-            //Tile startPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == TileTypes.Portal));
-            //Tile endPoint = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.TowerKey));
-            //AStar.FindPath(startPoint.Position, endPoint.Position);
-            //List<Tile> pathAstarTest = AStar.FindPath(startPoint, endPoint);
-            //foreach (Tile q in pathAstarTest)
-            //{
-            //    q.Color = Color.Violet;
 
-            //}
         }
 
 
@@ -289,6 +256,7 @@ namespace MortensWay
 
 #endif
 
+
             if (algorithmIsChosen && arrived && (index < destinations.Length - 1))
             {
                 foreach (Tile tile in grid)
@@ -299,13 +267,27 @@ namespace MortensWay
                 }
                 Tile startNode = destinations[index];
                 Tile endNode = destinations[index + 1];
-                index++;
-                BFS.BFSMethod(startNode, endNode);
-                List<Tile> pathTest = BFS.FindPath(endNode, startNode);
-                foreach (Tile tile in pathTest)
+
+                List<Tile> pathTest = new List<Tile>();
+                if (ChosenAlgorithm == AlgorithmType.BFS)
                 {
-                    tile.Color = Color.LightBlue;
+                    BFS.BFSMethod(startNode, endNode);
+                    pathTest = BFS.FindPath(endNode, startNode);
+                    foreach (Tile tile in pathTest)
+                    {
+                        tile.Color = Color.LightBlue;
+                    }
                 }
+                else //if (ChosenAlgorithm == AlgorithmType.AStat)
+                {
+                    aStar = new AStar(cells);
+                    pathTest = AStar.FindPath(destinations[index].Position, destinations[index + 1].Position);
+                    foreach (var VARIABLE in pathTest)
+                    {
+                        VARIABLE.Color = Color.Pink;
+                    }
+                }
+                index++;
                 Thread t = new Thread(() => playerMorten.FollowPath(pathTest));
                 t.IsBackground = true;
                 t.Start();
@@ -520,7 +502,7 @@ namespace MortensWay
             destinations[1] = keyOne;
             destinations[3] = keyTwo;
             index = 0;
-            AlgorithmIsChosen = false; 
+            AlgorithmIsChosen = false;
         }
 
         #endregion
