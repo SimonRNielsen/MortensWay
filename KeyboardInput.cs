@@ -10,6 +10,8 @@ namespace MortensWay
         #region Fields
 
         public Action CloseGame;
+        public Action Reset;
+        public Action Restart;
 
         #endregion
         #region Properties
@@ -43,13 +45,29 @@ namespace MortensWay
 
             if (input.IsKeyDown(Keys.B) && !GameWorld.AlgorithmIsChosen)
             {
+                if (GameWorld.Restart)
+                    Reset?.Invoke();
                 BFS.StartBFS();
             }
 
             if (input.IsKeyDown(Keys.A) && !GameWorld.AlgorithmIsChosen)
             {
+                if (GameWorld.Restart)
+                    Reset?.Invoke();
                 AStar.StartAStar();
             }
+
+            if (GameWorld.Restart)
+                if (input.IsKeyDown(Keys.R))
+                {
+                    if (GameWorld.ChosenAlgorithm == AlgorithmType.AStat)
+                        GameWorld.ChosenAlgorithm = AlgorithmType.BFS;
+                    else
+                        GameWorld.ChosenAlgorithm = AlgorithmType.AStat;
+                    Restart?.Invoke();
+                    GameWorld.Restart = false;
+                }
+
         }
 
         #endregion
