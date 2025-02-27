@@ -45,6 +45,7 @@ namespace MortensWay
 
             if (input.IsKeyDown(Keys.B) && !GameWorld.AlgorithmIsChosen)
             {
+                GameWorld.TilesMoved = 0; //Reset tile count
                 if (GameWorld.Restart)
                     Reset?.Invoke();
                 BFS.StartBFS();
@@ -52,6 +53,7 @@ namespace MortensWay
 
             if (input.IsKeyDown(Keys.A) && !GameWorld.AlgorithmIsChosen)
             {
+                GameWorld.TilesMoved = 0; //Reset tile count
                 if (GameWorld.Restart)
                     Reset?.Invoke();
                 AStar.StartAStar();

@@ -13,23 +13,22 @@ namespace MortensWay
 
         public static Tile BFSMethod(Tile startNode, Tile endNode)
         {
-            //ChatGPTs solution:
-            Queue<Tile> queue = new Queue<Tile>();
-            startNode.Discovered = true;
-            queue.Enqueue(startNode);
-            while (queue.Count > 0)
+            Queue<Tile> queue = new Queue<Tile>(); 
+            startNode.Discovered = true; //The first node is marked as discovered, so it is not processed agaain
+            queue.Enqueue(startNode); //The first node is added to the queue.
+            while (queue.Count > 0) //Runs as long as the queue isn't empty
             {
-                Tile currentTile = queue.Dequeue();
-                if (currentTile == endNode)
+                Tile currentTile = queue.Dequeue(); //The current tile is taken from the queue. 
+                if (currentTile == endNode) //If the current tile is the endnode, the destination has ben reached, and is returned.
                 {
                     return currentTile;
                 }
-                foreach (Edge e in currentTile.Edges)
+                foreach (Edge e in currentTile.Edges) //Looks at all the edges from the current tile
                 {
-                    if (e.To != null)
+                    if (e.To != null) //To make sure there is no mistakes, as non-walkable tiles returns null and should be ignored. 
                     {
-                        Tile neighbor = e.To;
-                        if (!neighbor.Discovered)
+                        Tile neighbor = e.To; //The neighbor of the current tile is the destination of the edge
+                        if (!neighbor.Discovered) //If the neighbor isn't already discovered, it is marked ad discovered, the current tile is set as parent, and it is added to the queue to be processed later. 
                         {
                             neighbor.Discovered = true;
                             neighbor.Parent = currentTile;
@@ -39,33 +38,6 @@ namespace MortensWay
                 }
 
             }
-
-            /*The following is BFS as demonstrated in the asignment, but it creates an infinite loop:
-             *     
-            Queue<Edge> stack = new Queue<Edge>();
-            Edge startEdge = new Edge(0, startNode, startNode);
-            stack.Enqueue(startEdge);
-
-            while (stack.Count > 0)
-            {
-                Edge edge = stack.Dequeue();
-                if (!edge.To.Discovered)
-                {
-                    edge.To.Discovered = true;
-                    edge.To.Parent = edge.From;
-                }
-                if (edge.To == endNode)
-                {
-                    return edge.To;
-                }
-                foreach (Edge e in edge.To.Edges)
-                {
-                    if (!e.To.Discovered)
-                    {
-                        stack.Enqueue(e);
-                    }
-                }
-            }*/
             return null;
 
         }

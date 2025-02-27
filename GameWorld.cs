@@ -332,7 +332,7 @@ namespace MortensWay
                     }
             }
             _spriteBatch.DrawString(gameFont, "Tiles moved: " + TilesMoved.ToString(), new Vector2(10, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
-            _spriteBatch.DrawString(gameFont, "Press B for BFS \n" + "Press A for A* \n" + "Press R for restart \n" + "Press esc for exit", new Vector2(_graphics.PreferredBackBufferWidth - 280, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
+            _spriteBatch.DrawString(gameFont, "Press B for BFS \n" + "Press A for A* \n" + "Press esc for exit", new Vector2(_graphics.PreferredBackBufferWidth - 210, 10), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
 
             _spriteBatch.End();
 

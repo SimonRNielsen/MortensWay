@@ -146,6 +146,11 @@ namespace MortensWay
                         continue;
                     }
 
+                    if (!curNeighbour.Walkable)  // Hvis en tile ikke længere er walkable
+                    {
+                        continue; // Spring den over
+                    }
+
                     //hjørner
                     switch (i)
                     {
