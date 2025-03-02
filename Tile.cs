@@ -127,14 +127,14 @@ namespace MortensWay
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            if (type.Equals(TileTypes.Portal))
-                spriteBatch.Draw(GameWorld.sprites[TileTypes.Grass], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
-            else if (type.Equals(TileTypes.TowerKey))
-                spriteBatch.Draw(GameWorld.sprites[TileTypes.Grass], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
-            else if (type.Equals(TileTypes.TowerPortion))
-                spriteBatch.Draw(GameWorld.sprites[TileTypes.Path], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
-            else if (type.Equals(TileTypes.Key))
-                spriteBatch.Draw(originalTexture, position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
+            //if (type.Equals(TileTypes.Portal))
+            //    spriteBatch.Draw(GameWorld.sprites[TileTypes.Grass], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
+            //else if (type.Equals(TileTypes.TowerKey))
+            //    spriteBatch.Draw(GameWorld.sprites[TileTypes.Grass], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
+            //else if (type.Equals(TileTypes.TowerPortion))
+            //    spriteBatch.Draw(GameWorld.sprites[TileTypes.Path], position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
+            //else if (type.Equals(TileTypes.Key))
+            //    spriteBatch.Draw(originalTexture, position, null, color, 0, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[spriteEffectIndex], layer - 0.1f);
         }
 
         /// <summary>

@@ -127,67 +127,115 @@ namespace MortensWay
 
 
             #region gamemap
-            //Creation of tiles
-            for (int j = 0; j < 15; j++)
+            //Fence
+            for (int i = 3; i < 12; i++)
             {
-                for (int i = 0; i < 15; i++)
+
+                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
+                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
+            }
+
+            //Fence path
+            for (int i = 3; i < 12; i++)
+            {
+                grid.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
+
+            }
+
+            //Dirt & stone
+            for (int i = 5; i < 9; i++)
+            {
+                for (int j = 4; j < 12; j++)
                 {
-                    bool fencePath = false;
-                    TileTypes tile;
-                    switch (i)
+                    if (j < 11)
                     {
-                        case 0 when j == 13:
-                            tile = TileTypes.Portal;
-                            break;
-                        case 1 when j == 3:
-                            tile = TileTypes.TowerKey;
-                            break;
-                        case 13 when j == 12:
-                            tile = TileTypes.TowerPortion;
-                            break;
-                        case > 2 when i < 12 && (j == 12 || j == 14):
-                            tile = TileTypes.Fence;
-                            break;
-                        case > 2 when i < 12 && j == 13:
-                            fencePath = true;
-                            if (i == 4 || i == 7 || i == 10)
-                                tile = TileTypes.FencePath;
-                            else
-                                tile = TileTypes.Path;
-                            break;
-                        case 1 when j == 13:
-                        case 2 when j > 10 && j < 14:
-                        case 3 when j == 11:
-                        case 4 when j > 2 && j < 12:
-                        case 5 when j == 3:
-                        case 6 when j == 3:
-                        case 7 when j == 3:
-                        case 8 when j == 3:
-                        case 9 when j > 2 && j < 12:
-                        case 10 when j == 11:
-                        case 11 when j == 11:
-                        case 12 when j == 11 || j == 13:
-                        case 13 when j == 11 || j == 13:
-                            tile = TileTypes.Path;
-                            break;
-                        case 5 when j > 3 && j < 12:
-                        case 6 when j > 3 && j < 12:
-                        case 7 when j > 3 && j < 12:
-                        case 8 when j > 3 && j < 12:
-                            tile = TileTypes.Stone;
-                            break;
-                        default:
-                            tile = TileTypes.Grass;
-                            break;
+                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
+                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
                     }
-                    Tile t = new Tile(tile, new Vector2(64 * i, 64 * j), fencePath);
-                    gameObjects.Add(t);
-                    grid.Add(t);
-                    cells.Add(t.Position, t);
+                    grid.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
                 }
             }
-            keyOne = ChangeToKey();
-            keyTwo = ChangeToKey();
+            for (int i = 4; i < 10; i++)
+            {
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
+            }
+            for (int i = 1; i < 5; i++)
+            {
+                if (i < 3)
+                {
+                    grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
+                }
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
+                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
+            }
+            grid.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
+            grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
+
+            //Towers & Portal
+            grid.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
+            grid.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
+            grid.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
+
+            //grass
+            #region grass
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
+                }
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 3; j < 10; j++)
+                {
+                    if (i < 4)
+                    {
+                        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
+                    }
+                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * (i + 10), 64 * j)));
+                }
+            }
+            for (int i = 10; i < 15; i++)
+            {
+                grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 0, 64 * i)));
+                grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 14, 64 * i)));
+                if (i < 13 || i > 13)
+                {
+                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 1, 64 * i)));
+                }
+            }
+            for (int i = 3; i < 13; i++)
+            {
+                if (i < 5 || i > 8)
+                {
+                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * 11)));
+                }
+            }
+            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 2, 64 * 14)));
+            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 14)));
+            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 13, 64 * 14)));
+            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 12)));
+            
+
+
+
+
+            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            grid.Add(keyOne);
+            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
+            grid.Add(keyTwo);
+            #endregion
+            
+
+            foreach (Tile item in grid)
+            {
+                gameObjects.Add(item);
+            }
             foreach (Tile entry in grid)
             {
                 entry.CreateEdges(grid);
@@ -203,19 +251,6 @@ namespace MortensWay
             keyboard.CloseGame += ExitGame;
             keyboard.Reset += Reset;
             keyboard.Restart += ResetCurrent;
-
-            //Test of BFS: 
-            //Tile startNode = (Tile)(gameObjects.Find(x => x.Position == playerMorten.Position && x != playerMorten));
-            //Tile endNode = (Tile)(gameObjects.Find(x => (TileTypes)x.Type == (TileTypes)TileTypes.Key));
-            //BFS.BFSMethod(startNode, endNode);
-            //List<Tile> pathTest = BFS.FindPath(endNode, startNode);
-            //foreach (Tile t in pathTest)
-            //{
-            //    t.Color = Color.LightBlue;
-
-            //}
-
-
         }
 
 
@@ -430,11 +465,14 @@ namespace MortensWay
             while (finding)
             {
                 //Random generation the x and y position
-                int rndX = random.Next(0, 29);
-                int rndY = random.Next(0, 29);
+                //int rndX = random.Next(0, 15);
+                //int rndY = random.Next(0, 15);
+
+                int rndX = 0;
+                int rndY = 0;
 
                 //The random generatet placement
-                placement = new Vector2(rndX * 32, rndY * 32);
+                placement = new Vector2(rndX * 64, rndY * 64);
 
                 //Tjecking if the position is walkable
                 foreach (Tile item in grid)

@@ -42,11 +42,11 @@ namespace MortensWay
 
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (GameWorld.Arrived && position == GameWorld.Destinations[5].Position) { }
-            else
-                base.Draw(spriteBatch);
-        }
+        //public override void Draw(SpriteBatch spriteBatch)
+        //{
+        //    if (GameWorld.Arrived && position == GameWorld.Destinations[5].Position) { }
+        //    else
+        //        base.Draw(spriteBatch);
+        //}
     }
 }
