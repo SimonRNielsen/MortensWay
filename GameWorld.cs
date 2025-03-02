@@ -48,6 +48,7 @@ namespace MortensWay
         public Random random = new Random();
         public static Tile keyOne;
         public static Tile keyTwo;
+        private static List<Tile> myTiles = new List<Tile>();
 
         //Irene tester Astar
         public static Dictionary<Vector2, Tile> cells = new Dictionary<Vector2, Tile>();
@@ -130,15 +131,14 @@ namespace MortensWay
             //Fence
             for (int i = 3; i < 12; i++)
             {
-
-                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
-                grid.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
+                myTiles.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 12)));
+                myTiles.Add(new Tile(TileTypes.Fence, new Vector2(64 * i, 64 * 14)));
             }
 
             //Fence path
             for (int i = 3; i < 12; i++)
             {
-                grid.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
+                myTiles.Add(new Tile(TileTypes.FencePath, new Vector2(64 * i, 64 * 13)));
 
             }
 
@@ -149,36 +149,36 @@ namespace MortensWay
                 {
                     if (j < 11)
                     {
-                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
-                        grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
+                        myTiles.Add(new Tile(TileTypes.Path, new Vector2(64 * 4, 64 * j)));
+                        myTiles.Add(new Tile(TileTypes.Path, new Vector2(64 * 9, 64 * j)));
                     }
-                    grid.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
+                    myTiles.Add(new Tile(TileTypes.Stone, new Vector2(64 * i, 64 * j)));
                 }
             }
             for (int i = 4; i < 10; i++)
             {
-                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
+                myTiles.Add(new Tile(TileTypes.Path, new Vector2(64 * i, 64 * 3)));
             }
             for (int i = 1; i < 5; i++)
             {
                 if (i < 3)
                 {
-                    grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
+                    myTiles.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 1), 64 * 10)));
                 }
-                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
+                myTiles.Add(new Tile(TileTypes.Path, new Vector2(64 * (i + 9), 64 * 10)));
             }
             for (int i = 0; i < 3; i++)
             {
-                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
-                grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
+                myTiles.Add(new Tile(TileTypes.Path, new Vector2(64 * 2, 64 * (i + 11))));
+                myTiles.Add(new Tile(TileTypes.Path, new Vector2(64 * 13, 64 * (i + 11))));
             }
-            grid.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
-            grid.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
+            myTiles.Add(new Tile(TileTypes.Path, new Vector2(64, 64 * 13)));
+            myTiles.Add(new Tile(TileTypes.Path, new Vector2(64 * 12, 64 * 13)));
 
             //Towers & Portal
-            grid.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
-            grid.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
-            grid.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
+            myTiles.Add(new Tile(TileTypes.Portal, new Vector2(64 * 0, 64 * 13)));
+            myTiles.Add(new Tile(TileTypes.TowerKey, new Vector2(64 * 1, 64 * 3)));
+            myTiles.Add(new Tile(TileTypes.TowerPortion, new Vector2(64 * 13, 64 * 12)));
 
             //grass
             #region grass
@@ -186,7 +186,7 @@ namespace MortensWay
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
+                    myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
                 }
             }
             for (int i = 0; i < 5; i++)
@@ -195,47 +195,54 @@ namespace MortensWay
                 {
                     if (i < 4)
                     {
-                        grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
+                        myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * j)));
                     }
-                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * (i + 10), 64 * j)));
+                    myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * (i + 10), 64 * j)));
                 }
             }
             for (int i = 10; i < 15; i++)
             {
-                grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 0, 64 * i)));
-                grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 14, 64 * i)));
+                myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * 0, 64 * i)));
+                myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * 14, 64 * i)));
                 if (i < 13 || i > 13)
                 {
-                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 1, 64 * i)));
+                    myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * 1, 64 * i)));
                 }
             }
             for (int i = 3; i < 13; i++)
             {
                 if (i < 5 || i > 8)
                 {
-                    grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * 11)));
+                    myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * i, 64 * 11)));
                 }
             }
-            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 2, 64 * 14)));
-            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 14)));
-            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 13, 64 * 14)));
-            grid.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 12)));
+            myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * 2, 64 * 14)));
+            myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 14)));
+            myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * 13, 64 * 14)));
+            myTiles.Add(new Tile(TileTypes.Grass, new Vector2(64 * 12, 64 * 12)));
             
 
 
 
 
-            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            grid.Add(keyOne);
-            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, grid));
-            grid.Add(keyTwo);
-            #endregion
-            
+            keyOne = new Tile(TileTypes.Key, KeyPlacement(random, myTiles));
+            myTiles.Add(keyOne);
+            keyTwo = new Tile(TileTypes.Key, KeyPlacement(random, myTiles));
+            myTiles.Add(keyTwo);
+
+            foreach (Tile item in myTiles)
+            {
+                grid.Add(item);
+            }
 
             foreach (Tile item in grid)
             {
                 gameObjects.Add(item);
             }
+
+            #endregion
+
+
             foreach (Tile entry in grid)
             {
                 entry.CreateEdges(grid);
@@ -457,7 +464,7 @@ namespace MortensWay
         /// <param name="random">A variabel from the Random class</param>
         /// <param name="grid">HashSet grid over the tiles</param>
         /// <returns></returns>
-        public Vector2 KeyPlacement(Random random, HashSet<Tile> grid)
+        public Vector2 KeyPlacement(Random random, List<Tile> grid)
         {
             bool finding = true;
             Vector2 placement = Vector2.Zero;
@@ -465,14 +472,11 @@ namespace MortensWay
             while (finding)
             {
                 //Random generation the x and y position
-                //int rndX = random.Next(0, 15);
-                //int rndY = random.Next(0, 15);
-
-                int rndX = 0;
-                int rndY = 0;
+                int rndX = random.Next(0, 15);
+                int rndY = random.Next(0, 15);
 
                 //The random generatet placement
-                placement = new Vector2(rndX * 64, rndY * 64);
+                placement = new Vector2(rndX * 32, rndY * 32);
 
                 //Tjecking if the position is walkable
                 foreach (Tile item in grid)
@@ -492,7 +496,7 @@ namespace MortensWay
                             Debug.WriteLine($"{item.Type} {item.Position} {item.Walkable}");
                             //If the position of the tile is walkable then change "finding" to false to break the while loop
                             finding = false;
-                            return placement;
+                            return placement - new Vector2(32, 32);
                         }
                     }
                 }
